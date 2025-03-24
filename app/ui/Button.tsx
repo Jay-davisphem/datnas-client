@@ -23,7 +23,7 @@ const Button: React.FC<ButtonProps> = ({
   let variantClasses = '';
   switch (variant) {
     case 'primary':
-      variantClasses = 'bg-[var(--primary-color)] text-[var(--secondary-color)] hover:text-white hover:bg-[#001A50]';
+      variantClasses = 'bg-[var(--secondary-color)] text-[var(--primary-color)] hover:text-white hover:bg-[#001A50]';
       break;
     case 'secondary':
       variantClasses = 'bg-[var(--secondary-color)] text-[var(--accent-color)] hover:bg-[#004CE8] hover:text-white';
