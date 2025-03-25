@@ -1,3 +1,4 @@
+import Footer from "../ui/footer";
 import Header from "../ui/header";
 
 export default function Layout({
@@ -9,6 +10,7 @@ export default function Layout({
       <div>
         <Header />
         {children}
+        <Footer />
       </div>
   );
 }

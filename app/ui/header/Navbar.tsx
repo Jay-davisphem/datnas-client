@@ -5,6 +5,7 @@ import { TbUserFilled } from "react-icons/tb";
 import Button from '../Button';
 import NavLink from './NavLink';
 import Menu from './Menu';
+import Link from 'next/link';
 
 
 export default function Navbar() {
@@ -23,7 +24,9 @@ export default function Navbar() {
                 <NavLink name='Course' url='/courses' />
                 <NavLink name='Contact' url='/contact-us' />
             </div>
-            <Button icon={TbUserFilled} className='text-sm rounded-lg hover:text-[var(--accent-color)] hover:bg-white hover:border' iconSize={25} variant='accent'>Sign UP</Button>
+            <Link href='/sign-up'>
+              <Button icon={TbUserFilled} className='text-sm rounded-lg hover:text-[var(--accent-color)] hover:bg-white hover:border' iconSize={25} variant='accent'>Sign UP</Button>
+            </Link>
         </div>
       </nav>
     );
