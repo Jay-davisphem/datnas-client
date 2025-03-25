@@ -1,6 +1,6 @@
 'use client'
 import { motion } from "framer-motion";
-import { JSX, useRef } from "react";
+import { JSX, useRef, useState, useEffect } from "react";
 
 interface CarouselProps<T> {
   items: T[];
@@ -9,14 +9,23 @@ interface CarouselProps<T> {
 
 export function Carousel<T>({ items, renderItem }: CarouselProps<T>) {
   const carouselRef = useRef<HTMLDivElement>(null);
+  const [constraint, setConstraint] = useState(0);
+
+  // Calculate drag constraints after the component mounts and items change
+  useEffect(() => {
+    if (carouselRef.current) {
+      setConstraint(carouselRef.current.scrollWidth - carouselRef.current.offsetWidth);
+    }
+  }, [items]);
 
   return (
-    <div className="overflow-hidden w-full">
+    <div className="overflow-hidden w-full" ref={carouselRef}>
       <motion.div
-        ref={carouselRef}
         className="flex gap-6 flex-nowrap cursor-grab"
         drag="x"
-        dragConstraints={{ left: -(carouselRef.current?.scrollWidth || 0), right: 0 }}
+        dragConstraints={{ right: 0, left: -constraint }}
+        dragElastic={0.2} // Lower elasticity for a firmer feel
+        whileTap={{ cursor: "grabbing" }}
       >
         {items.map((item, index) => (
           <motion.div 
