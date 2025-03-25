@@ -1,12 +1,9 @@
 'use client'
-import { useEffect } from "react";
-import useEmblaCarousel from "embla-carousel-react";
 import Button from "../../Button"
 import Image from "next/image"
 import { openSans } from "../../fonts"
 import WhyChooseUsItem, { IWhyChooseUsItem } from "./WhyChooseUsItem"
 import AboutUsItem, { IAboutUsItem } from "./AboutUsItem"
-import Carousel from "../../Carousel";
 
 export function HomeSection1() {
   return (
