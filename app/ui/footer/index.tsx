@@ -12,7 +12,7 @@ export default function Footer() {
           <NewslettterSub />
           <Info />
           <Socials />
-          <SiteUtilities />
+          {/* <SiteUtilities /> */}
         </div>
         <div className="hidden md:flex md:px-16 lg:px-32 justify-between">
           <div className="flex flex-col gap-4 w-2/5">
