@@ -38,7 +38,7 @@ export function HomeSection2() {
               <Button className="text-lg font-bold w-fit border px-30 py-4 rounded-lg" variant="accent">Learn more</Button>
             </div>
           </div>
-          <div className="flex justify-between w-94 h-96 md:w-[40%] lg:h-164">
+          <div className="flex justify-between h-96 md:w-[40%] lg:h-164">
             <Image className="w-[48%] self-start" src='/work3.svg' alt="working students" width={200} height={200} priority/>
             <Image className="w-[48%] self-end" src='/work2.svg' alt="working students" width={200} height={200} priority/>
           </div>
