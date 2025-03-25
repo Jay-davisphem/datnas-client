@@ -1,7 +1,7 @@
 import Info from "./Info";
 import NewslettterSub from "./NewslettterSub";
-import SiteUtilities from "./SiteUtilities";
-import Socials from "./Socials";
+// import SiteUtilities from "./SiteUtilities";
+// import Socials from "./Socials";
 
 export default function Footer() {
   const publishYear = 2025
@@ -11,13 +11,13 @@ export default function Footer() {
         <div className="flex flex-col md:hidden px-6 gap-4">
           <NewslettterSub />
           <Info />
-          <Socials />
+          {/* <Socials /> */}
           {/* <SiteUtilities /> */}
         </div>
         <div className="hidden md:flex md:px-16 lg:px-32 justify-between">
           <div className="flex flex-col gap-4 w-2/5">
             <Info />
-            <Socials />
+            {/* <Socials /> */}
           </div>
           <div className="flex flex-col w-3/5 2xl:w-2/5 px-18 gap-8 ">
             <NewslettterSub />
