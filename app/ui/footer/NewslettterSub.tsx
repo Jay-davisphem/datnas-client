@@ -1,3 +1,4 @@
+'use client'
 import { Button, Input } from "@headlessui/react";
 
 export default function NewslettterSub() {
