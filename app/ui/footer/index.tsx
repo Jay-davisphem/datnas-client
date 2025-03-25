@@ -1,6 +1,6 @@
 import Info from "./Info";
 import NewslettterSub from "./NewslettterSub";
-// import SiteUtilities from "./SiteUtilities";
+import SiteUtilities from "./SiteUtilities";
 // import Socials from "./Socials";
 
 export default function Footer() {
@@ -12,7 +12,7 @@ export default function Footer() {
           <NewslettterSub />
           <Info />
           {/* <Socials /> */}
-          {/* <SiteUtilities /> */}
+          <SiteUtilities />
         </div>
         <div className="hidden md:flex md:px-16 lg:px-32 justify-between">
           <div className="flex flex-col gap-4 w-2/5">
@@ -21,7 +21,7 @@ export default function Footer() {
           </div>
           <div className="flex flex-col w-3/5 2xl:w-2/5 px-18 gap-8 ">
             <NewslettterSub />
-            {/* <SiteUtilities /> */}
+            <SiteUtilities />
           </div>
         </div>
         <div className="border-t mx-6 md:mx-16 my-6 lg:my-8 2xl:my-16 lg:mx-32 pt-8 flex flex-col md:flex-row gap-y-2 items-center justify-center gap-x-1">
