@@ -1,9 +1,10 @@
+'use client'
 import Button from "../../Button"
 import Image from "next/image"
 import { openSans } from "../../fonts"
 import WhyChooseUsItem, { IWhyChooseUsItem } from "./WhyChooseUsItem"
 import AboutUsItem, { IAboutUsItem } from "./AboutUsItem"
-// import { Swiper, SwiperSlide } from 'swiper/react';
+import { Swiper, SwiperSlide } from 'swiper/react';
 
 export function HomeSection1() {
   return (
@@ -86,10 +87,25 @@ export function WhyChooseUs() {
           <h2 className="text-2xl md:text-4xl font-black text-[#001A50]">Why Choose Us?</h2>
           <p className={`md:w-2/3 ${openSans.className} text-xs md:text-lg`}>Lorem ipsum dolor sit amet consectetur. Vel quis velit integer massa eget nibh viverra. Consequat dictum aliquam aliquam pellentesque morbi habitant.</p>
         </div>
-        
-        <div className="flex flex-col md:flex-row gap-8">
-          {items.map(({title, content}) => <WhyChooseUsItem key={title} title={title} content={content}/>)}
-        </div>
+        <Swiper
+          spaceBetween={50}
+          slidesPerView={3}
+          onSlideChange={() => console.log('slide change')}
+          onSwiper={(swiper) => console.log(swiper)}
+        >
+          <SwiperSlide>Slide 1</SwiperSlide>
+          <SwiperSlide>Slide 2</SwiperSlide>
+          <SwiperSlide>Slide 3</SwiperSlide>
+          <SwiperSlide>Slide 4</SwiperSlide>
+          ...
+        </Swiper>
+        <Swiper className="flex flex-col md:flex-row gap-8" 
+          spaceBetween={50}
+          slidesPerView={1}
+          onSlideChange={() => console.log('slide change')}
+          onSwiper={(swiper) => console.log(swiper)}>
+            {items.map(({title, content}) => <SwiperSlide><WhyChooseUsItem key={title} title={title} content={content}/></SwiperSlide>)}
+        </Swiper>
     </div>
   )
 }

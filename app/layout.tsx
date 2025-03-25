@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import {poppins} from "./ui/fonts";
 
-// import "swiper/css";
+import "swiper/css";
 import "./globals.css";
 
 export const metadata: Metadata = {
