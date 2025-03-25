@@ -21,7 +21,7 @@ export default function Footer() {
           </div>
           <div className="flex flex-col w-3/5 2xl:w-2/5 px-18 gap-8 ">
             <NewslettterSub />
-            <SiteUtilities />
+            {/* <SiteUtilities /> */}
           </div>
         </div>
         <div className="border-t mx-6 md:mx-16 my-6 lg:my-8 2xl:my-16 lg:mx-32 pt-8 flex flex-col md:flex-row gap-y-2 items-center justify-center gap-x-1">

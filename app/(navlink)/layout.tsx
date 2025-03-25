@@ -1,4 +1,3 @@
-'use client'
 import Footer from "../ui/footer";
 import Header from "../ui/header";
 
