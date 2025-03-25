@@ -6,6 +6,7 @@ import Image from "next/image"
 import { openSans } from "../../fonts"
 import WhyChooseUsItem, { IWhyChooseUsItem } from "./WhyChooseUsItem"
 import AboutUsItem, { IAboutUsItem } from "./AboutUsItem"
+import Carousel from "../../Carousel";
 
 export function HomeSection1() {
   return (
@@ -83,15 +84,6 @@ export function WhyChooseUs() {
     { title: "Compassionate, Competent, Teaching", content: "Our vision is to set the standard as the foremost choice in online tutoring services, distinguished by our commitment to excellence, innovation, and unparalleled service delivery." },
     { title: "Fullest Potential", content: "We inspire and support students in reaching their fullest potential, fostering a culture of growth, resilience, and achievement in every aspect of their academic and professional development." },
   ];
-
-  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, align: "start", containScroll: "trimSnaps" });
-
-  useEffect(() => {
-    if (!emblaApi) return;
-    let interval = setInterval(() => emblaApi.scrollNext(), 4000); // Auto-slide every 4 seconds
-    return () => clearInterval(interval);
-  }, [emblaApi]);
-
   return (
     <div className="p-6 md:p-16 lg:p-32 flex flex-col items-center justify-center bg-white mb-2 lg:mb-3 gap-16">
       <div className="flex flex-col items-center text-center gap-4 md:gap-6">
@@ -99,20 +91,19 @@ export function WhyChooseUs() {
         <p className="md:w-2/3 text-xs md:text-lg">Lorem ipsum dolor sit amet consectetur. Vel quis velit integer massa eget nibh viverra. Consequat dictum aliquam aliquam pellentesque morbi habitant.</p>
       </div>
 
-      {/* Embla Carousel Wrapper */}
-      <div className="overflow-hidden w-full" ref={emblaRef}>
+      <div className="overflow-hidden w-full">
         <div className="flex gap-6 flex-nowrap">
           {items.map((item) => (
-            <div 
-              key={item.title} 
-              className="flex-[0_0_100%] md:flex-[0_0_calc(100%/2)] lg:flex-[0_0_calc(100%/4)] px-4"
-            >
-              <WhyChooseUsItem {...item} />
-            </div>
-          ))}
+                <div 
+                key={item.title} 
+                className="flex-[0_0_100%] md:flex-[0_0_calc(100%/2)] lg:flex-[0_0_calc(100%/4)] px-4"
+                >
+                  <WhyChooseUsItem key={item.title+item.imgUrl} {...item} />
+                </div>
+            ))}
         </div>
-      </div>
     </div>
+     </div>
   );
 }
 export function SayingsAboutUs() {
