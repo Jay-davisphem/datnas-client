@@ -8,7 +8,7 @@ import { Fragment } from 'react';
 export default function MenuI() {
   return (
     <Menu as="div" className="relative">
-        <MenuButton className='cursor-pointer rounded-full transform transition-colors duration-200 hover:scale-105 active:scale-105 hover:border hover:border-white active:border active:border-white' aria-label="Main menu">
+        <MenuButton className='cursor-pointer rounded-full transform transition-colors duration-200 hover:scale-105 active:scale-105 hover:border active:rounded-none hover:rounded-none hover:border-white active:border active:border-white focus:border focus:border-white' aria-label="Main menu">
             {({ open }) => (
                 open
                 ? <IoClose className="w-12 h-12 transform transition-transform duration-200 scale-95" />
