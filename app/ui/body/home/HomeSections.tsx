@@ -14,10 +14,10 @@ export function HomeSection1() {
             <h1 className="md:transform md:scale-y-110 text-3xl lg:text-6xl font-black">Tutoring Platform for Nursing and Allied Health Students</h1>
             <p className="text-sm lg:text-2xl">Unlock limitless learning with our educational platform. Explore, discover, and achieve your goals with personalized learning experiences tailored just for you.</p>
             <div className="flex justify-center gap-8 md:gap-16">
-              <Link href='/about-us'>
+              <Link href='/about-us' className="hover:opaque-80 active:opaque-80">
                 <Button className="text-sm font-bold md:px-8 lg:px-16 lg:text-xl px-6 md:py-4" variant="accent">Learn More</Button>
               </Link>
-              <Link href='/sign-up'>
+              <Link href='/sign-up' className="hover:opaque-80 active:opaque-80">
                 <Button className="text-sm font-bold md:px-8 lg:px-16 lg:text-xl px-6 md:py-4" variant="secondary">Sign up</Button>
               </Link>
             </div>
@@ -37,10 +37,10 @@ export function HomeSection2() {
           <div className="flex flex-col gap-4 text-center items-center lg:text-start lg:items-start md:w-1/2 self-center lg:gap-8">
             <h1 className="font-black text-3xl lg:text-6xl">Personalised professional online tutor on your schedule</h1>
             <p className={`text-sm lg:text-xl ${openSans.className}`}>Lorem ipsum dolor sit amet consectetur. Vel quis velit integer massa eget nibh viverra. Consequat dictum aliquam aliquam pellentesque morbi habitant. Molestie ipsum sed pharetra faucibus ac ac penatibus feugiat. Facilisis eget nunc pellentesque vitae.</p>
-            <Link href='/about-us' className="lg:hidden">
+            <Link href='/about-us' className="lg:hidden hover:opaque-80 active:opaque-80">
               <Button className="text-sm w-fit border px-16 rounded-lg" variant="primary">Learn more</Button>
             </Link>
-            <Link href='/about-us' className="hidden lg:block">
+            <Link href='/about-us' className="hidden lg:block hover:opaque-80 active:opaque-80">
               <Button className="text-lg font-bold w-fit border px-30 py-4 rounded-lg" variant="accent">Learn more</Button>
             </Link>
           </div>
@@ -59,7 +59,7 @@ export function HomeSection3() {
           <div className="md:w-[45%] flex flex-col text-white text-center md:text-start gap-8 md:items-start mx-auto">
             <h1 className="md:transform md:scale-y-110 text-3xl lg:text-6xl font-black">All in one platform for your learning need</h1>
             <p className={`text-sm lg:text-2xl ${openSans.className}`}>This platform aims to empower nursing students by providing comprehensive resources, engaging modules, and practical insights.</p>
-            <Link href='/sign-up' className="flex justify-center gap-8 md:gap-16">
+            <Link href='/sign-up' className="flex justify-center gap-8 md:gap-16 hover:opaque-80 active:opaque-80">
               <Button className="text-sm font-bold md:px-8 lg:px-16 lg:text-xl px-6 md:py-4" variant="secondary">Sign up</Button>
             </Link>
           </div>
