@@ -9,7 +9,7 @@ export default function UtilityGroup({head, lists}:IUtilityGroup) {
         <p className="text-base font-bold">{head}</p>
         {
             lists.map((value) => (
-                <Link key={value} href={toSlug(value)}>{value}</Link>
+                <Link key={value} href={toSlug(value)} className="hover:underline active:underline">{value}</Link>
             ))
         }
     </div>
