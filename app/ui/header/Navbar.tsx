@@ -11,7 +11,7 @@ import Link from 'next/link';
 export default function Navbar() {
     return (
       <nav className="px-6 md:px-16 lg:px-32 py-3 md:py-6">
-        <div className="lg:hidden flex justify-between">
+        <div className="lg:hidden flex justify-between items-center">
             <Logo />
             <Menu />
         </div>
