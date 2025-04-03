@@ -1,6 +1,5 @@
 import Image from "next/image"
 import ScaleUpParagraph from "../../AnimatedP"
-import Link from "next/link"
 
 export type IMission = {
     src: string,

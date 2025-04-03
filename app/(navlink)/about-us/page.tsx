@@ -1,4 +1,4 @@
-import {AboutUs1, AboutUs2, AboutUs3, AboutUs4} from "@/app/ui/body/home/AboutUsComponents";
+import {AboutUs1, AboutUs2, AboutUs3, AboutUs4, AboutUs5} from "@/app/ui/body/home/AboutUsComponents";
 
 export default function AboutUs() {
   return (
@@ -7,6 +7,7 @@ export default function AboutUs() {
       <AboutUs2 />
       <AboutUs3 />
       <AboutUs4 />
+      <AboutUs5 />
     </main>
   )
 }

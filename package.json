@@ -18,7 +18,8 @@
     "prop-types": "^15.8.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "react-icons": "^5.5.0"
+    "react-icons": "^5.5.0",
+    "react-star-rating-component": "^1.4.1"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
@@ -27,6 +28,7 @@
     "@types/prop-types": "^15.7.14",
     "@types/react": "^19.0.12",
     "@types/react-dom": "^19.0.4",
+    "@types/react-star-rating-component": "^1.4.4",
     "tailwindcss": "^4",
     "typescript": "^5"
   },
