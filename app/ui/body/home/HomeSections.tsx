@@ -6,6 +6,7 @@ import WhyChooseUsItem, { IWhyChooseUsItem } from "./WhyChooseUsItem"
 import AboutUsItem, { IAboutUsItem } from "./AboutUsItem"
 import { Carousel } from "../../Carousel"
 import Link from "next/link"
+import ScaleUpParagraph from "../../AnimatedP"
 
 export function HomeSection1() {
   return (
@@ -36,7 +37,7 @@ export function HomeSection2() {
     <div className="p-6 md:p-16 lg:p-32 flex flex-col md:justify-between bg-white gap-8 md:flex-row-reverse">
           <div className="flex flex-col gap-4 text-center items-center lg:text-start lg:items-start md:w-1/2 self-center lg:gap-8">
             <h1 className="font-black text-3xl lg:text-6xl">Personalised professional online tutor on your schedule</h1>
-            <p className={`text-sm lg:text-xl ${openSans.className}`}>Lorem ipsum dolor sit amet consectetur. Vel quis velit integer massa eget nibh viverra. Consequat dictum aliquam aliquam pellentesque morbi habitant. Molestie ipsum sed pharetra faucibus ac ac penatibus feugiat. Facilisis eget nunc pellentesque vitae.</p>
+            <ScaleUpParagraph className={`text-sm lg:text-xl ${openSans.className}`}>Lorem ipsum dolor sit amet consectetur. Vel quis velit integer massa eget nibh viverra. Consequat dictum aliquam aliquam pellentesque morbi habitant. Molestie ipsum sed pharetra faucibus ac ac penatibus feugiat. Facilisis eget nunc pellentesque vitae.</ScaleUpParagraph>
             <Link href='/about-us' className="lg:hidden hover:opaque-80 active:opaque-80">
               <Button className="text-sm w-fit border px-16 rounded-lg" variant="primary">Learn more</Button>
             </Link>
@@ -58,7 +59,7 @@ export function HomeSection3() {
     <div className="p-6 md:p-16 lg:p-32 flex flex-col items-center md:flex-row md:justify-between gap-8">
           <div className="md:w-[45%] flex flex-col text-white text-center md:text-start gap-8 md:items-start mx-auto">
             <h1 className="md:transform md:scale-y-110 text-3xl lg:text-6xl font-black">All in one platform for your learning need</h1>
-            <p className={`text-sm lg:text-2xl ${openSans.className}`}>This platform aims to empower nursing students by providing comprehensive resources, engaging modules, and practical insights.</p>
+            <ScaleUpParagraph className={`text-sm lg:text-2xl ${openSans.className}`}>This platform aims to empower nursing students by providing comprehensive resources, engaging modules, and practical insights.</ScaleUpParagraph>
             <Link href='/sign-up' className="flex justify-center gap-8 md:gap-16 hover:opaque-80 active:opaque-80">
               <Button className="text-sm font-bold md:px-8 lg:px-16 lg:text-xl px-6 md:py-4" variant="secondary">Sign up</Button>
             </Link>
