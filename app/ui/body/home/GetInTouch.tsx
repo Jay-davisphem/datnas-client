@@ -7,6 +7,7 @@ import GetInTouchCard, { IGetInTouchCard } from "./GetInTouchCard";
 import CustomInput, { ICustomInputProps } from "./Input";
 import { openSans } from "../../fonts";
 import dynamic from "next/dynamic";
+import { Button } from "@headlessui/react";
 
 // Dynamically import OpenStreetMap with SSR disabled
 const OpenStreetMap = dynamic(() => import("./OpenStreetMap"), { ssr: false });
@@ -30,13 +31,18 @@ export default function GetInTouch() {
                 <div className="w-full md:w-7/20 flex md:flex-col gap-3 flex-wrap">
                     {infos.map((info, index) => <GetInTouchCard key={index} {...info} />)}
                 </div>
-                <div className="w-full md:w-11/20 flex flex-col rounded bg-white md:px-7 gap-4 md:py-12">
+                <div className="w-full md:w-11/20 flex flex-col rounded bg-white md:px-7 gap-4 md:py-12 justify-start">
                     <div className="self-start flex flex-col gap-4 md:gap-8 p-0">
                         <h3 className="font-bold text-lg md:text-4xl">Get in Touch</h3>
                         <p className={`${openSans.className} md:text-base text-xs`}>Lorem ipsum dolor sit amet consectetur. Lacus in ultrices vestibulum netus molestie non auctor justo. Sed commodo ut ut vehicula malesuada. Sapien gravida pharetra</p>
                     </div>
                     <div className="flex flex-col gap-4 md:gap-6">
                         {inputs.map((inp, index) => <CustomInput key={index} {...inp} />)}
+                    <div className="flex">
+                        <Button className='text-white bg-[#001A50] px-20 py-2 md:py-3 md:px-40 text-xs md:text-xl'>
+                            Submit
+                        </Button>
+                    </div>
                     </div>
                 </div>
             </div>
