@@ -90,7 +90,7 @@ export function WhyChooseUs() {
   ];
 
   return (
-    <div className="p-6 md:p-16 lg:p-32 flex flex-col items-center justify-center bg-white mb-2 lg:mb-3 gap-16">
+    <div className="md:p-16 lg:p-32 flex flex-col items-center justify-center bg-white mb-2 lg:mb-3 gap-16">
       <div className="flex flex-col items-center text-center gap-4 md:gap-6">
         <h2 className="text-2xl md:text-4xl font-black text-[#001A50]">Why Choose Us?</h2>
         <p className="md:w-2/3 text-xs md:text-lg">Lorem ipsum dolor sit amet consectetur. Vel quis velit integer massa eget nibh viverra. Consequat dictum aliquam aliquam pellentesque morbi habitant.</p>
