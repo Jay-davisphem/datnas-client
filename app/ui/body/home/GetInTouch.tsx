@@ -6,9 +6,11 @@ import { PiTreePalmFill } from "react-icons/pi";
 import GetInTouchCard, { IGetInTouchCard } from "./GetInTouchCard";
 import CustomInput, { ICustomInputProps } from "./Input";
 import { openSans } from "../../fonts";
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-import "leaflet/dist/leaflet.css";
-import { LatLngExpression } from "leaflet";
+import dynamic from "next/dynamic";
+
+// Dynamically import OpenStreetMap with SSR disabled
+const OpenStreetMap = dynamic(() => import("./OpenStreetMap"), { ssr: false });
+
 
 export default function GetInTouch() {
     const infos: IGetInTouchCard[] = [
@@ -22,8 +24,6 @@ export default function GetInTouch() {
         { label: "Email Address", placeholder: "Provide your email address", type: "email" },
         { label: "Message", placeholder: "Write your message here", isTextArea: true }
     ];
-
-    const coordinates: LatLngExpression = [37.7795939, -122.4167938]
     return (
         <div className="flex flex-col bg-white md:bg-[#EEEEEE] ">
             <div className="gap-10 flex flex-col md:flex-row p-6 md:p-16 lg:p-32 pb-40 justify-between">
@@ -40,19 +40,7 @@ export default function GetInTouch() {
                     </div>
                 </div>
             </div>
-            <div className="w-full h-[300px] md:h-[500px] p-6">
-                <MapContainer center={coordinates} zoom={13} className="w-full h-full rounded-lg">
-                    <TileLayer
-                        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                    />
-                    <Marker position={coordinates}>
-                        <Popup>
-                            Datnas Office - 23A Anderson street
-                        </Popup>
-                    </Marker>
-                </MapContainer>
-            </div>
+            <OpenStreetMap />
         </div>
     );
 }
