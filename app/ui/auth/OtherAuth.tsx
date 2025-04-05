@@ -3,7 +3,7 @@ import { FcGoogle } from "react-icons/fc";
 
 export default function OtherAuth({ status = 'up' }: { status?: 'in' | 'up' }) {
   return (
-    <div className="flex justify-between text-xs md:text-sm"> 
+    <div className="flex justify-between text-[8px] md:text-sm"> 
       <span className="flex cursor-pointer w-1/2 items-center gap-2 border-r border-[#001A50] pr-4">
         <FcGoogle size={20}/>
         <p className="min-w-fit">Sign {status} with Google</p>
