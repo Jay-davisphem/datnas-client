@@ -1,6 +1,6 @@
-'use client';
-import { motion, MotionProps, useInView } from 'framer-motion';
-import { ReactNode, useRef } from 'react';
+"use client";
+import { motion, MotionProps, useInView } from "framer-motion";
+import { ReactNode, useRef } from "react";
 
 interface ScaleUpParagraphProps extends MotionProps {
   children: ReactNode;

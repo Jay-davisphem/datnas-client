@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import { motion } from "framer-motion";
 import { JSX, useRef, useState, useEffect } from "react";
 
@@ -14,7 +14,9 @@ export function Carousel<T>({ items, renderItem }: CarouselProps<T>) {
   // Calculate drag constraints after the component mounts and items change
   useEffect(() => {
     if (carouselRef.current) {
-      setConstraint(carouselRef.current.scrollWidth - carouselRef.current.offsetWidth);
+      setConstraint(
+        carouselRef.current.scrollWidth - carouselRef.current.offsetWidth,
+      );
     }
   }, [items]);
 
@@ -28,7 +30,7 @@ export function Carousel<T>({ items, renderItem }: CarouselProps<T>) {
         whileTap={{ cursor: "grabbing" }}
       >
         {items.map((item, index) => (
-          <motion.div 
+          <motion.div
             key={index}
             className="flex-[0_0_100%] md:flex-[0_0_calc(100%/2)] lg:flex-[0_0_calc(100%/4)] px-4"
           >

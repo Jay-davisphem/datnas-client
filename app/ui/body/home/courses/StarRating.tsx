@@ -7,9 +7,13 @@ interface StarRatingProps {
   size?: number;
 }
 
-const StarRating: React.FC<StarRatingProps> = ({ value, onChange, size = 30 }) => {
+const StarRating: React.FC<StarRatingProps> = ({
+  value,
+  onChange,
+  size = 30,
+}) => {
   const [hoverValue, setHoverValue] = useState<number | null>(null);
-  
+
   console.log("Component rendering with value:", value);
   console.log("Current hover value:", hoverValue);
 
@@ -20,7 +24,9 @@ const StarRating: React.FC<StarRatingProps> = ({ value, onChange, size = 30 }) =
     // Round to nearest quarter
     const quarterValue = Math.ceil(percentage * 4) / 4;
     const newValue = starIndex - 1 + quarterValue;
-    console.log(`Star ${starIndex}, percentage: ${percentage}, quarterValue: ${quarterValue}, newValue: ${newValue}`);
+    console.log(
+      `Star ${starIndex}, percentage: ${percentage}, quarterValue: ${quarterValue}, newValue: ${newValue}`,
+    );
     return newValue;
   };
 
@@ -33,14 +39,17 @@ const StarRating: React.FC<StarRatingProps> = ({ value, onChange, size = 30 }) =
       {[1, 2, 3, 4, 5].map((starIndex) => {
         // Use hover value if available, otherwise use the prop value
         const currentValue = hoverValue !== null ? hoverValue : value;
-        
+
         // Calculate fill percentage for this star
-        const fillLevel = Math.max(0, Math.min(1, currentValue - (starIndex - 1)));
+        const fillLevel = Math.max(
+          0,
+          Math.min(1, currentValue - (starIndex - 1)),
+        );
         console.log(`Star ${starIndex}, fillLevel: ${fillLevel}`);
-        
+
         // Create a unique ID for this star's gradient
         const gradientId = `star-${starIndex}-${Math.random().toString(36).substr(2, 9)}`;
-        
+
         return (
           <svg
             key={starIndex}
@@ -48,20 +57,22 @@ const StarRating: React.FC<StarRatingProps> = ({ value, onChange, size = 30 }) =
             height={size}
             viewBox="0 0 24 24"
             onMouseMove={(e) => {
-              if (onChange){
+              if (onChange) {
                 const newHoverValue = getQuarterValue(e, starIndex);
                 setHoverValue(newHoverValue);
               }
             }}
             onMouseLeave={() => {
-              if (onChange){
+              if (onChange) {
                 setHoverValue(null);
                 console.log("Mouse left, resetting hover value");
-              }                 
+              }
             }}
             onClick={(e) => {
               const newValue = getQuarterValue(e, starIndex);
-              console.log(`Clicked on star ${starIndex}, setting value to ${newValue}`);
+              console.log(
+                `Clicked on star ${starIndex}, setting value to ${newValue}`,
+              );
               if (onChange) {
                 onChange(newValue);
               }
@@ -71,7 +82,7 @@ const StarRating: React.FC<StarRatingProps> = ({ value, onChange, size = 30 }) =
             aria-checked={Math.round(value) === starIndex}
             tabIndex={0}
             onKeyDown={(e) => {
-              if (e.key === ' ' || e.key === 'Enter') {
+              if (e.key === " " || e.key === "Enter") {
                 onChange?.(starIndex);
               }
             }}

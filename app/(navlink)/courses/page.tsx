@@ -1,5 +1,3 @@
 export default function Courses() {
-  return (
-    <div>Courses</div>
-  )
+  return <div>Courses</div>;
 }

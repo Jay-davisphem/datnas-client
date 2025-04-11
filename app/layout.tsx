@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import {poppins} from "./ui/fonts";
+import { poppins } from "./ui/fonts";
 
 import "./globals.css";
 
@@ -15,9 +15,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${poppins.className} text-[40px] antialiased`}
-      >
+      <body className={`${poppins.className} text-[40px] antialiased`}>
         {children}
       </body>
     </html>

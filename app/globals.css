@@ -1,11 +1,11 @@
 @import "tailwindcss";
 
 :root {
-  --primary-color: #001A50;  /* Deep Purple (Main theme color) */
+  --primary-color: #001a50; /* Deep Purple (Main theme color) */
   --secondary-color: #ffffff; /* White (Used for text and backgrounds) */
-  --accent-color: #004CE8;  /* Bright Purple (Used for buttons and highlights) */
-  --text-color: #1C1C1C;  /* Black (Used for general text) */
-  --border-color: #D8D8D8; /* Light Gray (Used for borders and dividers) */
+  --accent-color: #004ce8; /* Bright Purple (Used for buttons and highlights) */
+  --text-color: #1c1c1c; /* Black (Used for general text) */
+  --border-color: #d8d8d8; /* Light Gray (Used for borders and dividers) */
 }
 
 @theme inline {
@@ -22,7 +22,6 @@ body {
   background: var(--primary-color);
   font-family: Arial, Helvetica, sans-serif;
 }
-
 
 .embla__slide {
   position: relative;
@@ -42,13 +41,12 @@ body {
   }
 }
 
-
 ::selection {
-  background-color: #001A50;
+  background-color: #001a50;
   color: white;
 }
 
-::-moz-selection { 
-  background-color: #001A50;
+::-moz-selection {
+  background-color: #001a50;
   color: white;
 }

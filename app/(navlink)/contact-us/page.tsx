@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import ContactInfo from "@/app/ui/body/home/ContactInfo";
 import GetInTouch from "@/app/ui/body/home/GetInTouch";
 
@@ -8,5 +8,5 @@ export default function Contact() {
       <ContactInfo />
       <GetInTouch />
     </div>
-  )
+  );
 }

@@ -4,7 +4,7 @@ import { openSans } from "../../fonts";
 export interface ICustomInputProps extends InputProps {
   label: string;
   isTextArea?: boolean;
-  onChange?: any
+  onChange?: any;
 }
 
 export default function CustomInput({
@@ -18,7 +18,9 @@ export default function CustomInput({
 }: ICustomInputProps) {
   return (
     <div className="flex flex-col gap-2 md:gap-3">
-      <label className="block py-0 pl-2 md:pl-3 text-[8px] md:text-sm font-bold">{label}:</label>
+      <label className="block py-0 pl-2 md:pl-3 text-[8px] md:text-sm font-bold">
+        {label}:
+      </label>
 
       {isTextArea ? (
         <Textarea
