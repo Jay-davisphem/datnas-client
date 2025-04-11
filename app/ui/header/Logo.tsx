@@ -8,6 +8,7 @@ export default function Logo({width = 119, height = 45}: {width?: number, height
         src='/DATNAS01.svg'
         width={width}
         height={height}
+        className='shrink-0'
         priority
         />
       </Link>

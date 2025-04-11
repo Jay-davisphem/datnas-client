@@ -3,7 +3,11 @@ import Image from "next/image"
 import Link from "next/link"
 import { IoThumbsUpOutline } from "react-icons/io5";
 import { BiCommentDetail } from "react-icons/bi";
-import StarRating from "./StarRating";
+import dynamic from "next/dynamic";
+
+const StarRating = dynamic(() => import("./StarRating"), { ssr: false });
+
+
 export type ICourseCategory = {
     thumbnail: string,
     category: string,

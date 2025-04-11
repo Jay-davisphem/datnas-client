@@ -1,9 +1,7 @@
 'use client'
-
 import { Menu, MenuButton, MenuItem, MenuItems, Transition } from '@headlessui/react'
 import { IoMenu, IoClose } from "react-icons/io5";
 import {NavLink2 as NavLink} from './NavLink';
-import { Fragment } from 'react';
 
 export default function MenuI() {
   return (
