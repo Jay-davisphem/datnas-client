@@ -3,10 +3,11 @@ import { serialize } from "cookie";
 
 interface RefreshTokenRequest {
   refreshToken: string;
+  expires?: any;
 }
 
 export async function POST(req: Request): Promise<Response> {
-  const { refreshToken } = (await req.json()) as RefreshTokenRequest;
+  const { refreshToken, expires } = (await req.json()) as RefreshTokenRequest;
   if (!refreshToken) {
     return NextResponse.json(
       { error: "No refresh token provided" },
@@ -14,9 +15,8 @@ export async function POST(req: Request): Promise<Response> {
     );
   }
   const cookie = serialize("refreshToken", refreshToken, {
-    httpOnly: true,
-    // secure: process.env.NODE_ENV === 'production',
-    sameSite: "none",
+    expires: new Date(expires),
+    secure: true,
     path: "/",
   });
   const response = NextResponse.json({ message: "Refresh token stored" });

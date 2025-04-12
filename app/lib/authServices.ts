@@ -16,11 +16,12 @@ interface TokenData {
 
 const setRefreshToken = async (
   refreshToken: string | undefined,
+  expires?: any,
 ): Promise<void> => {
   try {
     await axios.post(
       "/api/auth/set-refresh-token",
-      { refreshToken },
+      { refreshToken, expires },
       {
         headers: { "Content-Type": "application/json" },
         withCredentials: true,
@@ -53,24 +54,27 @@ export const getAccessToken = async (data: {
     const newAccessToken = tokenData?.access?.jwt;
     const refreshToken = tokenData?.refresh?.jwt;
     const expiresAt = tokenData?.access?.expiredAt;
+    const refrehTokenExpires = tokenData?.refresh.expiredAt;
 
     if (newAccessToken) {
       accessToken = newAccessToken;
 
-      // Convert expiresAt to a Date object (assuming expiredAt is an ISO string)
-      const expiresInSeconds = Math.floor(
-        (new Date(expiresAt).getTime() - Date.now()) / 1000,
-      );
-      const expiresInDays = expiresInSeconds / (60 * 60 * 24);
+      const expiresDate = new Date(expiresAt);
 
-      // Store access token in cookies
+      // Check if the conversion was successful
+      if (isNaN(expiresDate.getTime())) {
+        console.error("Invalid expiresAt date string:", expiresAt);
+        return newAccessToken; // or null, you can handle the error
+      }
+
+      // Store access token in cookies with the correct expiry Date
       Cookies.set("accessToken", newAccessToken, {
-        expires: expiresInDays,
+        expires: expiresDate,
         secure: true,
       });
 
       // Store refresh token via API
-      await setRefreshToken(refreshToken);
+      await setRefreshToken(refreshToken, refrehTokenExpires);
     }
 
     return newAccessToken || null;
@@ -84,6 +88,10 @@ export const getStoredAccessToken = (): string | null => {
   return Cookies.get("accessToken") || null;
 };
 
+export const getStoredRefreshToken = (): string | null => {
+  return Cookies.get("refrehToken") || null;
+};
+
 export const refreshAccessToken = async (): Promise<string | null> => {
   try {
     const res = await axios.post(
@@ -92,24 +100,27 @@ export const refreshAccessToken = async (): Promise<string | null> => {
       { withCredentials: true },
     );
 
-    const tokenData = res.data?.data;
+    const tokenData = res?.data;
     const newAccessToken = tokenData?.access?.jwt;
+    const newRefreshToken = tokenData?.refresh?.jwt;
     const expiresAt = tokenData?.access?.expiredAt;
 
     if (newAccessToken) {
       accessToken = newAccessToken;
 
-      // Convert expiresAt to expiration time for cookies
-      const expiresInSeconds = Math.floor(
-        (new Date(expiresAt).getTime() - Date.now()) / 1000,
-      );
-      const expiresInDays = expiresInSeconds / (60 * 60 * 24);
+      const expiresDate = new Date(expiresAt);
+
+      if (isNaN(expiresDate.getTime())) {
+        console.error("Invalid expiresAt date string:", expiresAt);
+        return newAccessToken;
+      }
 
       Cookies.set("accessToken", newAccessToken, {
-        expires: expiresInDays,
+        expires: expiresDate,
         secure: true,
       });
 
+      await setRefreshToken(newRefreshToken, tokenData?.refresh?.jwt);
       return newAccessToken;
     }
 

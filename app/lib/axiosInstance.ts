@@ -9,15 +9,16 @@ interface CustomAxiosRequestConfig extends AxiosRequestConfig {
   _retry?: boolean;
 }
 
-const apiInstance = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_ROOT_API_URL,
+export const axiosInstance = axios.create({
+  baseURL: process.env.NEXT_PUBLIC_ROOT_API_URL || process.env.ROOT_API_URL,
   headers: {
     "Content-Type": "application/json",
   },
 });
+export const authAxiosInstance = axiosInstance;
 
 // Request Interceptor: Attach access token from cookies (not login function)
-apiInstance.interceptors.request.use(
+authAxiosInstance.interceptors.request.use(
   async (
     config: InternalAxiosRequestConfig,
   ): Promise<InternalAxiosRequestConfig> => {
@@ -31,7 +32,7 @@ apiInstance.interceptors.request.use(
 );
 
 // Response Interceptor: Refresh token on 401 and retry request
-apiInstance.interceptors.response.use(
+authAxiosInstance.interceptors.response.use(
   (response) => response,
   async (error: AxiosError): Promise<any> => {
     const originalRequest = error.config as CustomAxiosRequestConfig;
@@ -41,11 +42,9 @@ apiInstance.interceptors.response.use(
       const newAccessToken = await refreshAccessToken();
       if (newAccessToken && originalRequest.headers) {
         originalRequest.headers["Authorization"] = `Bearer ${newAccessToken}`;
-        return apiInstance(originalRequest);
+        return authAxiosInstance(originalRequest);
       }
     }
     return Promise.reject(error);
   },
 );
-
-export default apiInstance;

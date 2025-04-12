@@ -26,11 +26,11 @@ export async function POST(): Promise<Response> {
       },
     );
 
-    const newAccessToken = response.data?.data?.accessToken;
-    const newRefreshToken = response.data?.data?.refreshToken;
+    const newAccessToken = response.data?.data?.access;
+    const newRefreshToken = response.data?.data?.refresh;
     return NextResponse.json({
-      accessToken: newAccessToken,
-      refreshToken: newRefreshToken,
+      access: newAccessToken,
+      refresh: newRefreshToken,
     });
   } catch (error: unknown) {
     console.error("Failed to refresh token:", error);

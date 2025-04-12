@@ -5,8 +5,9 @@ import { useSearchParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 
-export default function PasswordResetSuccess() {
+export default function EmailVerificationSuccess() {
   const sParams = useSearchParams();
+  console.log(sParams, "sparams boss");
   const router = useRouter();
   const [isMounted, setIsMounted] = useState(false); // Add a mounted state
   const success = sParams.get("success")?.toLocaleLowerCase() === "true";
@@ -42,16 +43,16 @@ export default function PasswordResetSuccess() {
     retry = "Go to Login";
   }
 
-  // useEffect(() => {
-  //     if (!isFromEmail) {
-  //         router.push('/');
-  //     }
-  //     setIsMounted(true);
-  // }, [isFromEmail, router]);
+  useEffect(() => {
+    if (!isFromEmail) {
+      router.push("/");
+    }
+    setIsMounted(true);
+  }, [isFromEmail, router]);
 
-  // if (!isFromEmail || !isMounted) {
-  //     return null;
-  // }
+  if (!isFromEmail || !isMounted) {
+    return null;
+  }
 
   const containerVariants = {
     hidden: { opacity: 0, y: 50 },
