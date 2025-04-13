@@ -2,7 +2,6 @@
 
 import { safeRequest } from "../axiosInstance";
 import { cookies } from "next/headers";
-import { getOrigin } from "../utils/getOrigin";
 
 // --- Shared Utilities ---
 const isProd = process.env.NODE_ENV === "production";
@@ -46,7 +45,7 @@ export async function signUpAction(prevState: any, formData: FormData) {
     const email = getFormField(formData, "email");
 
     const body = { fullName, email, password };
-    const params = { url: `${getOrigin()}/verify-account` };
+    const params = { url: `${process.env.ORIGIN_URL ||   process.env.NEXT_PUBLIC_ORIGIN_URL}/verify-account` };
 
     await safeRequest({
       method: "post",
@@ -143,7 +142,7 @@ export async function passwordResetRequestAction(
       );
     }
 
-    const params = { url: `${getOrigin()}/password-reset` };
+    const params = { url: `${process.env.ORIGIN_URL ||   process.env.NEXT_PUBLIC_ORIGIN_URL}/password-reset` };
     await safeRequest({
       method: "post",
       url: "/auth/request-password-reset",

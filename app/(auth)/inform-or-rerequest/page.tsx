@@ -5,7 +5,6 @@ import { safeRequest } from "@/app/lib/axiosInstance";
 import { Button } from "@headlessui/react";
 import { useTempData } from "@/app/lib/contexts/tempData.context";
 import { extractErrorMessage } from "@/app/lib/utils/errorUtils";
-import { getOrigin } from "@/app/lib/utils/getOrigin";
 
 export default function EmailVerification() {
   const [resendState, setResendState] = useState<{
@@ -24,7 +23,7 @@ export default function EmailVerification() {
     setResendState({ loading: true, success: false, error: null });
     try {
       const params = {
-        url: `${getOrigin()}/verify-account`,
+        url: `${process.env.ORIGIN_URL ||   process.env.NEXT_PUBLIC_ORIGIN_URL}/verify-account`,
         resend: "true",
       };
 
