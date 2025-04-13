@@ -1,58 +1,43 @@
 "use client";
 import { openSans } from "@/app/ui/fonts";
 import Link from "next/link";
-import { useSearchParams, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
+import { useState, useTransition, useEffect } from "react";
 import { motion } from "framer-motion";
+import { Button } from "@headlessui/react";
+import { resendVerification } from "@/app/lib/actions/authActions";
 
 export default function EmailVerificationSuccess() {
   const sParams = useSearchParams();
-  console.log(sParams, "sparams boss");
-  const router = useRouter();
-  const [isMounted, setIsMounted] = useState(false); // Add a mounted state
-  const success = sParams.get("success")?.toLocaleLowerCase() === "true";
-  let color = "text-red-500";
-  let heading = "Email Verification Failed";
-  let text = "Sorry, we could not verify your email. Please try again.";
-  let retry = "Try Again";
-  const isExternalLink = typeof window !== "undefined" && document.referrer;
-  const emailReferrers = [
-    "mail.google.com",
-    "outlook.live.com",
-    "outlook.office.com",
-    "yahoo.com",
-    "mail.aol.com",
-    "icloud.com",
-    "yandex.com",
-    "zoho.com",
-    "protonmail.com",
-    "fastmail.com",
-    "sbcglobal.net",
-    "verizon.net",
-    "bellsouth.net",
-  ];
+  const [isPending, startTransition] = useTransition();
+  const [verificationStatus, setVerificationStatus] = useState<{
+    success: boolean | null;
+    error: string | null;
+  }>({
+    success: null,
+    error: null,
+  });
 
-  const isFromEmail =
-    isExternalLink &&
-    emailReferrers.some((ref) => document.referrer.includes(ref));
-
-  if (success) {
-    color = "text-green-500";
-    heading = "Email Verified Successfully!";
-    text = "Your email has been verified. You can now proceed to login.";
-    retry = "Go to Login";
-  }
+  const email = sParams.get("user");
+  const key = sParams.get("key");
 
   useEffect(() => {
-    if (!isFromEmail) {
-      router.push("/");
+    if (email && key) {
+      startTransition(async () => {
+        const result = await resendVerification(email, key);
+        if (result.success) {
+          setVerificationStatus({ success: true, error: null });
+        } else {
+          setVerificationStatus({ success: false, error: result.error! });
+        }
+      });
+    } else {
+      setVerificationStatus({
+        success: false,
+        error: "Email or key not found in URL.",
+      });
     }
-    setIsMounted(true);
-  }, [isFromEmail, router]);
-
-  if (!isFromEmail || !isMounted) {
-    return null;
-  }
+  }, [email, key]);
 
   const containerVariants = {
     hidden: { opacity: 0, y: 50 },
@@ -94,6 +79,20 @@ export default function EmailVerificationSuccess() {
     tap: { scale: 0.95 },
   };
 
+  let heading = "Verifying...";
+  let text = "Please wait while we verify your key.";
+  let color = "text-gray-500"; // Default color
+
+  if (verificationStatus.success === true) {
+    heading = "Key Verified Successfully!";
+    text = "Your key has been verified.";
+    color = "text-green-500";
+  } else if (verificationStatus.success === false) {
+    heading = "Key Verification Failed";
+    text = '';
+    color = "text-red-500";
+  }
+
   return (
     <motion.div
       variants={containerVariants}
@@ -114,6 +113,13 @@ export default function EmailVerificationSuccess() {
         >
           {text}
         </motion.p>
+        {verificationStatus.success === false && (
+          <>
+            {verificationStatus.error && (
+              <p className="text-red-500 text-sm">{verificationStatus.error}</p>
+            )}
+          </>
+        )}
       </div>
       <motion.div
         variants={buttonVariants}
@@ -122,10 +128,10 @@ export default function EmailVerificationSuccess() {
         className="mt-8"
       >
         <Link
-          href={success ? "/sign-in" : "/sign-up"}
+          href="/sign-in"
           className="bg-[#001A50] hover:opacity-80 focus:opacity-80 text-white font-bold py-2 px-4 rounded text-xl"
         >
-          {retry}
+          Go to Login
         </Link>
       </motion.div>
     </motion.div>

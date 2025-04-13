@@ -1,6 +1,6 @@
 import { Button } from "@headlessui/react";
 
-export default function SubmitBtn({ text = "Submit", pending = true }) {
+export default function SubmitBtn({ text = "Submit", pending = false }) {
   const co1 = "bg-[#001A50] text-white";
   const coh1 = "hover:opacity-80 focus:opacity-80";
   return (

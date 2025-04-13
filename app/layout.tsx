@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { poppins } from "./ui/fonts";
+import { AuthProvider } from "./lib/contexts/AuthContext";
 
 import "./globals.css";
 
@@ -16,7 +17,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${poppins.className} text-[40px] antialiased`}>
-        {children}
+        <AuthProvider>
+          {children}
+        </AuthProvider>
       </body>
     </html>
   );
