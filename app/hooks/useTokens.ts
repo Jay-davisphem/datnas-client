@@ -42,7 +42,9 @@ const useTokens = () => {
     try {
       const tokens = await fetch("/api/auth/tokens");
       if (!tokens.ok) {
-        throw new Error(`HTTP error! status: ${tokens.status}`);
+        const ret = `HTTP error! status: ${tokens.status}`;
+        console.error(ret);
+        return ret;
       }
       const {
         accessToken: fetchedAccessToken,

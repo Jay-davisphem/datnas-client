@@ -2,7 +2,7 @@
 import SubmitBtn from "@/app/ui/auth/SubmitBtn";
 import dynamic from "next/dynamic";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useActionState, useEffect } from "react";
+import { useActionState, useEffect, useState } from "react";
 import { passwordResetAction } from "@/app/lib/actions/authActions";
 
 const FormInput = dynamic(() => import("@/app/ui/auth/FormInput"), {
@@ -21,6 +21,8 @@ export default function ForgotPassword() {
   const user = searchParams.get("user");
   const key = searchParams.get("key");
 
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [state, formAction, pending] = useActionState(
     (prevState: any, formData: FormData) => {
       if (!user || !key) return { ...prevState, error: "Invalid reset link." };
@@ -28,11 +30,19 @@ export default function ForgotPassword() {
     },
     initialState,
   );
-
+  const handleInputChange = (e: {
+    target: { name: string; value: string };
+  }) => {
+    if (e.target.name === "confirmPassword") {
+      setConfirmPassword(e.target.value);
+    } else if (e.target.name === "password") {
+      setPassword(e.target.value);
+    }
+  };
   useEffect(() => {
     if (state.success && state.message) {
       router.push(`/password-reset-success?success=true`);
-    } else if ((!state.success && state.message) || !user || !key) {
+    } else if (!user || !key) {
       router.push(`/password-reset-success?success=false`);
     }
   }, [state, router]);
@@ -43,11 +53,19 @@ export default function ForgotPassword() {
         <h2 className="md:text-2xl font-bold text-xl">Password Reset</h2>
       </div>
       <form action={formAction} className="flex flex-col gap-6 md:gap-8">
-        <FormInput label="Password" type="password" name="password" />
+        <FormInput
+          label="Password"
+          type="password"
+          name="password"
+          value={password}
+          onChange={handleInputChange}
+        />
         <FormInput
           label="Confirm Password"
           type="password"
           name="confirmPassword"
+          value={confirmPassword}
+          onChange={handleInputChange}
         />
         {state.error && <p className="text-red-500 text-sm">{state.error}</p>}
         {!state.error && state.message && (

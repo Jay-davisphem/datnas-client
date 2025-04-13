@@ -23,7 +23,7 @@ export default function EmailVerification() {
     setResendState({ loading: true, success: false, error: null });
     try {
       const params = {
-        url: `${process.env.ORIGIN_URL ||   process.env.NEXT_PUBLIC_ORIGIN_URL}/verify-account`,
+        url: `${process.env.ORIGIN_URL || process.env.NEXT_PUBLIC_ORIGIN_URL}/verify-account`,
         resend: "true",
       };
 

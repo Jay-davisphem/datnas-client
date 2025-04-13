@@ -8,6 +8,7 @@ import {
   ListboxOption,
   ListboxOptions,
   Field,
+  Input,
 } from "@headlessui/react";
 import { openSans } from "../fonts";
 import { FaChevronDown } from "react-icons/fa6";
@@ -126,7 +127,7 @@ export default function FormInput({
         <Label className="min-w-fit border-b border-[#BDBDBD] block py-0 text-[8px] md:text-sm font-semibold">
           {label}:
         </Label>
-        <input
+        <Input
           className={`focus:autofill:bg-[001A5033] ${openSans.className} appearance-none border-b border-[#BDBDBD] w-full pl-2 md:pl-3 pb-2  text-xs md:text-base leading-tight focus:outline-none focus:shadow-outline align-bottom`}
           placeholder={props.placeholder}
           type={props.type}

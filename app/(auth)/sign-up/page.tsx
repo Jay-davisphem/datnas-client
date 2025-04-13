@@ -22,7 +22,10 @@ const initialState = {
   message: undefined,
 };
 
-const params = { url: `${process.env.ORIGIN_URL ||   process.env.NEXT_PUBLIC_ORIGIN_URL}/verify-account`, resend: "true" };
+const params = {
+  url: `${process.env.ORIGIN_URL || process.env.NEXT_PUBLIC_ORIGIN_URL}/verify-account`,
+  resend: "true",
+};
 
 export default function SignUp() {
   const [state, formAction, pending] = useActionState(

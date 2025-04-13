@@ -45,7 +45,7 @@ export default function RequestPasswordReset() {
           onChange={handleInputChange}
         />
         {state.error && <p className="text-red-500 text-sm">{state.error}</p>}
-        {!state.error && state.message && (
+        {state.message && (
           <p className={`text-${state.success ? "green" : "red"}-500 text-sm`}>
             {state.message}
           </p>
