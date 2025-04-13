@@ -101,7 +101,7 @@ export default function Subscribe() {
         </div>
       </div>
       <div className="bg-[#EEEEEE] w-full flex flex-col items-center text-center p-6 md:p-16 lg:p-32 pb-40 lg:pb-64">
-        <div className="md:-mt-30 lg:-mt-70 flex flex-col md:flex-row gap-8 text-white w-full items-center md:justify-between z-90 flex-wrap">
+        <div className="md:-mt-30 lg:-mt-70 flex flex-col md:flex-row gap-8 text-white w-full items-center md:justify-between z-31 flex-wrap">
           {items.map((item, index) => (
             <SubCard key={index} {...item} />
           ))}

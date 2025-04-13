@@ -21,7 +21,7 @@ export function Carousel<T>({ items, renderItem }: CarouselProps<T>) {
   }, [items]);
 
   return (
-    <div className="overflow-hidden w-full" ref={carouselRef}>
+    <div className="overflow-hidden w-full py-8" ref={carouselRef}>
       <motion.div
         className="flex gap-6 flex-nowrap cursor-grab"
         drag="x"

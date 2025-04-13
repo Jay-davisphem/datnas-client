@@ -12,7 +12,7 @@ export default function WhyChooseUsItem({
   content,
 }: IWhyChooseUsItem) {
   return (
-    <div className="flex flex-col gap-4 items-center text-center shadow-lg p-8 rounded-lg w-full h-full">
+    <div className="flex flex-col gap-4 items-center text-center border border-gray-100 shadow-lg p-8 rounded-lg w-full h-full">
       <Image
         className="w-40 h-40 md:w-35 md:h-35  object-contain"
         src={imgUrl}

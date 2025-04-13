@@ -22,57 +22,69 @@ export const authAxiosInstance = axios.create({
   },
 });
 
-// Request Interceptor: Attach the access token to the request headers
+// 🔐 Replace axios calls to /api/auth/* with fetch
+async function fetchAuthToken(): Promise<string | null> {
+  try {
+    const res = await fetch("/api/auth/tokens", {
+      credentials: "include",
+    });
+
+    if (!res.ok) return null;
+
+    const data = await res.json();
+    return data.accessToken;
+  } catch {
+    return null;
+  }
+}
 authAxiosInstance.interceptors.request.use(
-  async (
-    config: InternalAxiosRequestConfig,
-  ): Promise<InternalAxiosRequestConfig> => {
-    const res = await axios.get("/api/auth/tokens", { withCredentials: true });
+  async (config: InternalAxiosRequestConfig): Promise<InternalAxiosRequestConfig> => {
+    // If it's an /api/auth/* route, attach token
+      const token = await fetchAuthToken();
 
-    const { accessToken } = res.data;
+      if (token && config.headers) {
+        config.headers["Authorization"] = `Bearer ${token}`;
+      }
 
-    if (accessToken && config.headers) {
-      config.headers["Authorization"] = `Bearer ${accessToken}`;
-    }
-    return config;
+    return config; // 🛠️ Always return the config
   },
   (error) => Promise.reject(error),
 );
 
-// Response Interceptor: Refresh token on 401 and retry request
+// 🎯 Refresh on 401 ONLY for /api/auth/*
 authAxiosInstance.interceptors.response.use(
   (response) => response,
   async (error: AxiosError): Promise<any> => {
     const originalRequest = error.config as CustomAxiosRequestConfig;
-    
-    // If the response status is 401 (Unauthorized) and the request hasn't been retried yet
+
     if (error.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
 
       try {
-        // Attempt to refresh the token
-        await axios.post("/api/auth/refresh", {}, { withCredentials: true });
+        await fetch("/api/auth/refresh", {
+          method: "POST",
+          credentials: "include",
+        });
 
-        // If refresh is successful, get new tokens
-        const res = await axios.get("/api/auth/tokens", { withCredentials: true });
-        const { accessToken } = res.data;
+        const newAccessToken = await fetchAuthToken();
 
-        if (accessToken && originalRequest.headers) {
-          originalRequest.headers["Authorization"] = `Bearer ${accessToken}`;
-          return authAxiosInstance(originalRequest); // Retry the original request with the new access token
+        if (newAccessToken && originalRequest.headers) {
+          originalRequest.headers["Authorization"] = `Bearer ${newAccessToken}`;
+          return authAxiosInstance(originalRequest); 
         }
       } catch (refreshError) {
         console.error("Token refresh failed:", refreshError);
 
-        await axios.delete("/api/auth/logout");
+        await fetch("/api/auth/logout", {
+          method: "DELETE",
+          credentials: "include",
+        });
 
-        
-        window.location.href = '/sign-in';
-
+        window.location.href = "/sign-in";
         return Promise.reject(refreshError);
       }
     }
 
-    return Promise.reject(error); // If it's not a 401 or the refresh failed
+    return Promise.reject(error);
   }
 );

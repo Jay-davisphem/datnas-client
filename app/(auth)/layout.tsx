@@ -36,7 +36,7 @@ export default function Layout({
               initial="initial"
               animate="animate"
               exit="exit"
-              className="py-20 md:py-16 px-3 md:px-16 rounded-md shadow-lg shadow-[#00000040] w-full md:max-w-xl"
+              className="py-20 md:py-16 px-3 md:px-16 rounded-md border border-gray-100 shadow-lg shadow-[#00000040] w-full md:max-w-xl"
             >
               {children}
             </motion.div>

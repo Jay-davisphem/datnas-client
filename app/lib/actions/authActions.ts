@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import { axiosInstance } from "../axiosInstance";
 import { extractErrorMessage } from "../utils/errorUtils";
 import { cookies } from "next/headers";
+import { getOrigin } from "../utils/getOrigin";
 
 export async function signUpAction(prevState: any, formData: FormData) {
   try {
@@ -17,7 +18,7 @@ export async function signUpAction(prevState: any, formData: FormData) {
       password: formData.get("password")?.toString(),
     };
 
-    const params = { url: "http://localhost:3000/verify-account" };
+    const params = { url: `${getOrigin()}/verify-account` };
 
     await axiosInstance.post("/auth/register", body, { params });
 
@@ -101,6 +102,100 @@ export async function signInAction(prevState: any, formData: FormData) {
       error: extractErrorMessage(error),
       message: "Sign in failed.",
     };
-    // redirect('/')
+  }
+}
+
+
+export async function passwordResetRequestAction(prevState: any, formData: FormData) {
+  try {
+    const email = formData.get("email")?.toString();
+
+    if (!email) {
+      return {
+        ...prevState,
+        error: "Email is required.",
+        message: "Password reset request failed.",
+      };
+    }
+
+    const params = { url: `${getOrigin()}/password-reset` };
+    await axiosInstance.post("/auth/request-password-reset", { email }, { params });
+
+    return {
+      ...prevState,
+      success: true,
+      message: "Password reset link sent to your email.",
+    };
+  } catch (error: any) {
+    return {
+      ...prevState,
+      error: extractErrorMessage(error),
+      message: "Password reset request failed.",
+    };
+  }
+}
+
+export async function passwordResetAction(
+  prevState: any,
+  formData: FormData,
+  user: string,
+  token: string
+) {
+  const cook = await cookies()
+  try {
+    const newPassword = formData.get("password")?.toString();
+    const confirmPassword = formData.get("confirmPassword")?.toString();
+
+    if (!newPassword || !confirmPassword) {
+      return {
+        ...prevState,
+        error: "Password and confirm password are required.",
+        message: "Password reset failed.",
+        success: false,
+      };
+    }
+
+    if (newPassword !== confirmPassword) {
+      return {
+        ...prevState,
+        error: "Passwords do not match.",
+        message: "Password reset failed.",
+        success: false,
+      };
+    }
+
+    await axiosInstance.post("/auth/verify-reset-password", {
+      email: user,
+      token,
+      newPassword,
+    });
+    cook.set("passwordResetSuccess", "true", {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "strict",
+        path: "/",
+        maxAge: 60, // cookie expires in 60 seconds.
+    });
+
+    return {
+      ...prevState,
+      success: true,
+      message: "Password reset successful.",
+    };
+  } catch (error: any) {
+    cook.set("passwordResetSuccess", "false", {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "strict",
+        path: "/",
+        maxAge: 60, // cookie expires in 60 seconds.
+    });
+
+    return {
+      ...prevState,
+      error: extractErrorMessage(error),
+      message: "Password reset failed.",
+      success: false,
+    };
   }
 }

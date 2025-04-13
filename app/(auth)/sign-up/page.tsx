@@ -11,6 +11,7 @@ import { axiosInstance } from "@/app/lib/axiosInstance";
 import { useTempData } from "@/app/lib/contexts/tempData.context";
 import { redirect } from "next/navigation";
 import { extractErrorMessage } from "@/app/lib/utils/errorUtils";
+import { getOrigin } from "@/app/lib/utils/getOrigin";
 
 const FormInput = dynamic(() => import("@/app/ui/auth/FormInput"), {
   ssr: false,
@@ -22,7 +23,7 @@ const initialState = {
   message: undefined,
 };
 
-const params = { url: "http://localhost:3000/verify-account", resend: "true" };
+const params = { url: `${getOrigin()}/verify-account`, resend: "true" };
 
 export default function SignUp() {
   const [state, formAction, pending] = useActionState(
@@ -163,7 +164,7 @@ export default function SignUp() {
           Forgot Password?
         </Link>
 
-        <SubmitBtn pending={pending} />
+        <SubmitBtn pending={pending} text={`${pending ? "Signing up..." : "Sign Up"}`}/>
 
         <OtherAuth />
       </div>

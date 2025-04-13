@@ -1,11 +1,15 @@
 import Image from "next/image";
 import Link from "next/link";
+import { cookies } from "next/headers";
 import Button from "@/app/ui/Button"; // Assuming you have a Button component
 import { openSans } from "../../fonts";
 import ScaleUpParagraph from "../../AnimatedP";
 import MissionCard, { IMission } from "./MissionCard";
 import CourseCategory, { ICourseCategory } from "./courses/CourseCategory";
-export function AboutUs1() {
+export async function AboutUs1() {
+  // send fetch get request to /api/auth/tokens, and extract accessToken out
+  
+  const accessToken = (await cookies()).get('accessToken')
   return (
     <div className="relative w-full flex flex-col items-center text-center p-6 md:p-16 lg:p-32 pb-40 lg:pb-64">
       {/* Image Container */}
@@ -36,12 +40,12 @@ export function AboutUs1() {
               Learn More
             </Button>
           </Link>
-          <Link href="/sign-up" className="hover:opacity-80 active:opacity-80">
+          <Link href={accessToken?'/dashboard':"/sign-up"} className="hover:opacity-80 active:opacity-80">
             <Button
               className="text-sm font-bold md:px-8 lg:px-16 lg:text-xl px-6 md:py-4"
               variant="secondary"
             >
-              Sign up
+              {accessToken? 'To Dashboard':"Sign up"}
             </Button>
           </Link>
         </div>

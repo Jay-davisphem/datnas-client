@@ -1,6 +1,3 @@
-import Image from "next/image";
-import Button from "../ui/Button";
-import { openSans } from "../ui/fonts";
 import CourseCategories from "../ui/body/home/CourseCategories";
 import {
   AdsSection,
