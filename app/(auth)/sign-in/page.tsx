@@ -24,13 +24,15 @@ export default function SignIn() {
   const { signIn } = useAuth();
   const [state, formAction, pending] = useActionState(
     signInAction,
-    initialState
+    initialState,
   );
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleInputChange = (e: { target: { name: string; value: string } }) => {
+  const handleInputChange = (e: {
+    target: { name: string; value: string };
+  }) => {
     if (e.target.name === "email") {
       setEmail(e.target.value);
     } else if (e.target.name === "password") {
@@ -72,7 +74,10 @@ export default function SignIn() {
         >
           Forgot Password?
         </Link>
-        <SubmitBtn text={`${pending ? "Signing in..." : "Sign In"}`} pending={pending} />
+        <SubmitBtn
+          text={`${pending ? "Signing in..." : "Sign In"}`}
+          pending={pending}
+        />
         <OtherAuth status="in" />
       </div>
     </form>

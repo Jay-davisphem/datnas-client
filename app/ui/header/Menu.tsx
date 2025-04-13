@@ -51,7 +51,7 @@ export default function MenuI() {
                       name={name}
                       url={url}
                       onClick={() => {
-                        close(); 
+                        close();
                       }}
                     />
                   )}

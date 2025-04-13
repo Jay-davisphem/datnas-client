@@ -20,10 +20,22 @@ export default function NavLink({ name, url }: { name: string; url: string }) {
   );
 }
 
-export function NavLink2({ name, url, onClick=undefined }: { name: string; url: string, onClick?: () => void }) {
+export function NavLink2({
+  name,
+  url,
+  onClick = undefined,
+}: {
+  name: string;
+  url: string;
+  onClick?: () => void;
+}) {
   const pathname = usePathname();
   return (
-    <Link href={url} className={`flex ${pathname === url ? "bg-white" : ""}`} onClick={onClick}>
+    <Link
+      href={url}
+      className={`flex ${pathname === url ? "bg-white" : ""}`}
+      onClick={onClick}
+    >
       <Button
         variant="none"
         className={`${pathname === url ? "text-[var(--accent-color)]" : "text-[#777777]"}  text-lg`}

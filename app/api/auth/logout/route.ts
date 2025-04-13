@@ -7,5 +7,8 @@ export async function DELETE() {
   cook.delete("accessToken");
   cook.delete("refreshToken");
 
-  return NextResponse.json({ success: true, message: "Logged out successfully." });
+  return NextResponse.json({
+    success: true,
+    message: "Logged out successfully.",
+  });
 }

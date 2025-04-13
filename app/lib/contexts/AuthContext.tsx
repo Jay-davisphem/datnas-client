@@ -44,14 +44,14 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   const signIn = async (accessToken: string, refreshToken: string) => {
     setAccessToken(accessToken);
-    setRefreshToken(refreshToken)
-  }
+    setRefreshToken(refreshToken);
+  };
   const signOut = async () => {
     await fetch("/api/auth/logout", {
       method: "DELETE",
       credentials: "include",
     });
-  
+
     setAccessToken(null);
     setRefreshToken(null);
   };
@@ -62,11 +62,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         method: "POST",
         credentials: "include",
       });
-  
+
       if (!res.ok) {
         throw new Error("Refresh failed");
       }
-  
+
       // Re-fetch tokens from /api/auth/tokens
       const me = await fetch("/api/auth/tokens", { credentials: "include" });
       const data = await me.json();

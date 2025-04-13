@@ -10,7 +10,7 @@ import ScaleUpParagraph from "../../AnimatedP";
 import useTokens from "@/app/hooks/useTokens";
 
 export function HomeSection1() {
-  const { accessToken } = useTokens()
+  const { accessToken } = useTokens();
   return (
     <div className="mt-4 p-6 md:p-16 lg:p-32 flex flex-col items-center  md:flex-row md:justify-between gap-18 md:gap-0">
       <div className="md:w-[45%] flex flex-col text-white text-center md:text-start gap-8 md:items-start mx-auto">
@@ -31,12 +31,15 @@ export function HomeSection1() {
               Learn More
             </Button>
           </Link>
-          <Link href={accessToken?'/dashboard':"/sign-up"} className="hover:opaque-80 active:opaque-80">
+          <Link
+            href={accessToken ? "/dashboard" : "/sign-up"}
+            className="hover:opaque-80 active:opaque-80"
+          >
             <Button
               className="text-sm font-bold md:px-8 lg:px-16 lg:text-xl px-6 md:py-4"
               variant="secondary"
             >
-              {accessToken? 'To Dashboard':"Sign up"}
+              {accessToken ? "To Dashboard" : "Sign up"}
             </Button>
           </Link>
         </div>
@@ -124,7 +127,7 @@ export function HomeSection2() {
 }
 
 export function HomeSection3() {
-  const { accessToken } = useTokens()
+  const { accessToken } = useTokens();
   return (
     <div className="p-6 md:p-16 lg:p-32 flex flex-col items-center md:flex-row md:justify-between gap-8">
       <div className="md:w-[45%] flex flex-col text-white text-center md:text-start gap-8 md:items-start mx-auto">
@@ -138,14 +141,14 @@ export function HomeSection3() {
           comprehensive resources, engaging modules, and practical insights.
         </ScaleUpParagraph>
         <Link
-          href={accessToken?'/dashboard':"/sign-up"}
+          href={accessToken ? "/dashboard" : "/sign-up"}
           className="flex justify-center gap-8 md:gap-16 hover:opaque-80 active:opaque-80"
         >
           <Button
             className="text-sm font-bold md:px-8 lg:px-16 lg:text-xl px-6 md:py-4"
             variant="secondary"
           >
-            {accessToken? 'To Dashboard':"Sign up"}
+            {accessToken ? "To Dashboard" : "Sign up"}
           </Button>
         </Link>
       </div>

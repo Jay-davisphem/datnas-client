@@ -8,28 +8,27 @@ import { motion } from "framer-motion";
 export default function PasswordResetSuccess() {
   const [success, setSuccess] = useState<boolean | null>(null);
   const router = useRouter();
-  
+
   useEffect(() => {
     async function checkCookie() {
       try {
-        const response = await fetch('/api/password-reset-success');
+        const response = await fetch("/api/password-reset-success");
         const data = await response.json();
-        
+
         if (data.success !== null) {
           setSuccess(data.success);
         } else {
-          router.push('/password-reset-request');
+          router.push("/password-reset-request");
         }
       } catch (error) {
-        console.error('Error fetching password reset status:', error);
-        router.push('/password-reset-request');
+        console.error("Error fetching password reset status:", error);
+        router.push("/password-reset-request");
       }
     }
-    
+
     checkCookie();
   }, [router]);
-  
-  
+
   let color = "text-red-500";
   let heading = "Password Reset Fail";
   let text = "Sorry, password reset fail. Please try again.";
@@ -38,11 +37,10 @@ export default function PasswordResetSuccess() {
   if (success) {
     color = "text-green-500";
     heading = "Email Verified Successfully!";
-    text = "Your password has been reset successfully. You can now proceed to login.";
+    text =
+      "Your password has been reset successfully. You can now proceed to login.";
     retry = "Go to Login";
   }
-
- 
 
   const containerVariants = {
     hidden: { opacity: 0, y: 50 },

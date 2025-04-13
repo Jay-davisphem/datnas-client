@@ -164,7 +164,10 @@ export default function SignUp() {
           Forgot Password?
         </Link>
 
-        <SubmitBtn pending={pending} text={`${pending ? "Signing up..." : "Sign Up"}`}/>
+        <SubmitBtn
+          pending={pending}
+          text={`${pending ? "Signing up..." : "Sign Up"}`}
+        />
 
         <OtherAuth />
       </div>

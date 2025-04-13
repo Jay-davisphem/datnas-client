@@ -18,7 +18,7 @@ const initialState = {
 export default function RequestPasswordReset() {
   const [state, formAction, pending] = useActionState(
     passwordResetRequestAction,
-    initialState
+    initialState,
   );
 
   const [email, setEmail] = useState("");
@@ -45,8 +45,15 @@ export default function RequestPasswordReset() {
           onChange={handleInputChange}
         />
         {state.error && <p className="text-red-500 text-sm">{state.error}</p>}
-        {!state.error && state.message && <p className={`text-${state.success ? 'green' : 'red'}-500 text-sm`}>{state.message}</p>}
-        <SubmitBtn text={`${pending ? "Sending..." : "Send Reset Link"}`} pending={pending} />
+        {!state.error && state.message && (
+          <p className={`text-${state.success ? "green" : "red"}-500 text-sm`}>
+            {state.message}
+          </p>
+        )}
+        <SubmitBtn
+          text={`${pending ? "Sending..." : "Send Reset Link"}`}
+          pending={pending}
+        />
       </form>
     </>
   );

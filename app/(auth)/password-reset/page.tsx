@@ -26,7 +26,7 @@ export default function ForgotPassword() {
       if (!user || !key) return { ...prevState, error: "Invalid reset link." };
       return passwordResetAction(prevState, formData, user, key);
     },
-    initialState
+    initialState,
   );
 
   useEffect(() => {
@@ -36,7 +36,7 @@ export default function ForgotPassword() {
       router.push(`/password-reset-success?success=false`);
     }
   }, [state, router]);
-  
+
   return (
     <>
       <div className="flex flex-col gap-2 mb-10 md:mb-20">
@@ -50,8 +50,15 @@ export default function ForgotPassword() {
           name="confirmPassword"
         />
         {state.error && <p className="text-red-500 text-sm">{state.error}</p>}
-        {!state.error && state.message && <p className={`text-${state.success ? 'green' : 'red'}-500 text-sm`}>{state.message}</p>}
-        <SubmitBtn text={`${pending ? "Resetting..." : "Reset Password"}`} pending={pending} />
+        {!state.error && state.message && (
+          <p className={`text-${state.success ? "green" : "red"}-500 text-sm`}>
+            {state.message}
+          </p>
+        )}
+        <SubmitBtn
+          text={`${pending ? "Resetting..." : "Reset Password"}`}
+          pending={pending}
+        />
       </form>
     </>
   );

@@ -89,7 +89,7 @@ export default function EmailVerificationSuccess() {
     color = "text-green-500";
   } else if (verificationStatus.success === false) {
     heading = "Key Verification Failed";
-    text = '';
+    text = "";
     color = "text-red-500";
   }
 

@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import Logo from "./Logo";
 import SearchInput from "./SearchInput";
 import { TbUserFilled, TbLogout2 } from "react-icons/tb";
@@ -7,14 +7,14 @@ import NavLink from "./NavLink";
 import Menu from "./Menu";
 import Link from "next/link";
 import { useAuth } from "@/app/lib/contexts/AuthContext";
-import { useRouter } from "next/navigation"; 
+import { useRouter } from "next/navigation";
 
 export default function Navbar() {
-  const { accessToken, signOut } = useAuth(); 
-  const router = useRouter(); 
+  const { accessToken, signOut } = useAuth();
+  const router = useRouter();
 
   const handleLogout = async () => {
-    await signOut(); 
+    await signOut();
     router.push("/");
   };
 

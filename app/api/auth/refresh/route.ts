@@ -8,17 +8,23 @@ export async function POST() {
     const refreshToken = cook.get("refreshToken")?.value;
 
     if (!refreshToken) {
-      return NextResponse.json({ error: "Refresh token missing" }, { status: 401 });
+      return NextResponse.json(
+        { error: "Refresh token missing" },
+        { status: 401 },
+      );
     }
 
-    const res = await axiosInstance.post('/auth/refresh-token', {
-      refreshToken: refreshToken,
-    },
-    {
-      headers: {
-        "Content-Type": "application/json",
+    const res = await axiosInstance.post(
+      "/auth/refresh-token",
+      {
+        refreshToken: refreshToken,
       },
-    });
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      },
+    );
 
     const { access, refresh } = res.data?.data;
 
@@ -41,7 +47,9 @@ export async function POST() {
 
     return NextResponse.json({ success: true });
   } catch (err: any) {
-    return NextResponse.json({ error: "Token refresh failed" }, { status: 401 });
+    return NextResponse.json(
+      { error: "Token refresh failed" },
+      { status: 401 },
+    );
   }
 }
-

@@ -38,13 +38,15 @@ async function fetchAuthToken(): Promise<string | null> {
   }
 }
 authAxiosInstance.interceptors.request.use(
-  async (config: InternalAxiosRequestConfig): Promise<InternalAxiosRequestConfig> => {
+  async (
+    config: InternalAxiosRequestConfig,
+  ): Promise<InternalAxiosRequestConfig> => {
     // If it's an /api/auth/* route, attach token
-      const token = await fetchAuthToken();
+    const token = await fetchAuthToken();
 
-      if (token && config.headers) {
-        config.headers["Authorization"] = `Bearer ${token}`;
-      }
+    if (token && config.headers) {
+      config.headers["Authorization"] = `Bearer ${token}`;
+    }
 
     return config; // 🛠️ Always return the config
   },
@@ -70,7 +72,7 @@ authAxiosInstance.interceptors.response.use(
 
         if (newAccessToken && originalRequest.headers) {
           originalRequest.headers["Authorization"] = `Bearer ${newAccessToken}`;
-          return authAxiosInstance(originalRequest); 
+          return authAxiosInstance(originalRequest);
         }
       } catch (refreshError) {
         console.error("Token refresh failed:", refreshError);
@@ -86,5 +88,5 @@ authAxiosInstance.interceptors.response.use(
     }
 
     return Promise.reject(error);
-  }
+  },
 );
