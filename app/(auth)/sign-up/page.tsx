@@ -4,9 +4,10 @@ import OtherAuth from "@/app/ui/auth/OtherAuth";
 import SubmitBtn from "@/app/ui/auth/SubmitBtn";
 import dynamic from "next/dynamic";
 import Link from "next/link";
-import { axiosInstance } from "@/app/lib/axiosInstance";
-import { useState } from "react";
+import { signUpAction } from "@/app/lib/actions/authActions";
+import { useActionState, useEffect, useState } from "react";
 import { Button } from "@headlessui/react";
+import { safeRequest } from "@/app/lib/axiosInstance";
 import { useTempData } from "@/app/lib/contexts/tempData.context";
 import { redirect } from "next/navigation";
 import { extractErrorMessage } from "@/app/lib/utils/errorUtils";
@@ -16,25 +17,26 @@ const FormInput = dynamic(() => import("@/app/ui/auth/FormInput"), {
   ssr: false,
 });
 
+const initialState = {
+  error: "",
+  success: undefined,
+  message: undefined,
+};
+
 const params = { url: `${getOrigin()}/verify-account`, resend: "true" };
 
 export default function SignUp() {
+  const [state, formAction, pending] = useActionState(
+    signUpAction,
+    initialState,
+  );
+
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
     courseOfStudy: "",
     password: "",
     confirmPassword: "",
-  });
-
-  const [signupState, setSignupState] = useState<{
-    loading: boolean;
-    success: boolean;
-    error: string | null;
-  }>({
-    loading: false,
-    success: false,
-    error: null,
   });
 
   const [resendState, setResendState] = useState<{
@@ -47,66 +49,40 @@ export default function SignUp() {
     error: null,
   });
 
-  const { setEmail } = useTempData();
+  const { setEmail } = useTempData(); // Use context
 
   const handleInputChange = (e: { target: { name: any; value: any } }) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSignUp = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setSignupState({ loading: true, success: false, error: null });
-
-    try {
-      if (formData.password !== formData.confirmPassword) {
-        setSignupState({
-          loading: false,
-          success: false,
-          error: "Passwords do not match.",
-        });
-        return;
-      }
-      const data = {
-        password: formData.password,
-        email: formData.email,
-        fullName: formData.fullName,
-      };
-      const res = await axiosInstance.post("/auth/register", data, { params });
-      console.log("Signup success:", res.data);
-      setSignupState({ loading: false, success: true, error: null });
-      setEmail(formData.email);
-      redirect("/inform-or-rerequest");
-    } catch (error: any) {
-      const errorMessage = extractErrorMessage(error);
-      console.error("Signup error:", error);
-      setSignupState({ loading: false, success: false, error: errorMessage });
-    }
-  };
-
   const handleResendVerification = async () => {
     setResendState({ loading: true, success: false, error: null });
     try {
-      const res = await axiosInstance.post(
-        "/auth/register",
-        { email: formData.email },
-        { params },
-      );
-      console.log("Resend verification success:", res.data);
-      setResendState({ loading: false, success: true, error: null });
-      setEmail(formData.email);
+      const res = await safeRequest({
+        url: "/auth/register",
+        data: { email: formData.email },
+        params: params,
+      });
+      console.log(res.data, "new res.data");
+      setResendState({ loading: false, success: true, error: res.error! });
+      setEmail(formData.email); // Set email in context
     } catch (error: any) {
-      const errorMessage = extractErrorMessage(error);
-      console.error("Resend verification error:", error);
       setResendState({
         loading: false,
         success: false,
-        error: errorMessage,
+        error: extractErrorMessage(error),
       });
     }
   };
+  useEffect(() => {
+    if (state && state.email) {
+      setEmail(state.email);
+      redirect("/inform-or-rerequest");
+    }
+  }, [state, setEmail]);
 
   return (
-    <form onSubmit={handleSignUp}>
+    <form action={formAction}>
       <InAndUp />
 
       <div className="flex flex-col gap-6 md:gap-8 mt-12">
@@ -151,10 +127,10 @@ export default function SignUp() {
       </div>
 
       <div className="mt-3 flex flex-col gap-8">
-        {signupState.error && (
+        {state.error && (
           <span className="text-red-500 text-sm">
-            {signupState.error}
-            {signupState.error?.includes("inactive") && (
+            {state.error}
+            {state.error?.includes("inactive") && (
               <Button
                 onClick={handleResendVerification}
                 className="w-fit text-sm cursor-pointer ml-1 text-red-500"
@@ -189,8 +165,8 @@ export default function SignUp() {
         </Link>
 
         <SubmitBtn
-          pending={signupState.loading}
-          text={`${signupState.loading ? "Signing up..." : "Sign Up"}`}
+          pending={pending}
+          text={`${pending ? "Signing up..." : "Sign Up"}`}
         />
 
         <OtherAuth />

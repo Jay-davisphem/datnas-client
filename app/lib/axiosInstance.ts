@@ -3,26 +3,26 @@ import axios, {
   AxiosError,
   InternalAxiosRequestConfig,
 } from "axios";
+import { extractErrorMessage } from "./utils/errorUtils";
 
 interface CustomAxiosRequestConfig extends AxiosRequestConfig {
   _retry?: boolean;
 }
 
-export const axiosInstance = axios.create({
+const axiosInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_ROOT_API_URL || process.env.ROOT_API_URL,
   headers: {
     "Content-Type": "application/json",
   },
 });
 
-export const authAxiosInstance = axios.create({
+const authAxiosInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_ROOT_API_URL || process.env.ROOT_API_URL,
   headers: {
     "Content-Type": "application/json",
   },
 });
 
-// 🔐 Replace axios calls to /api/auth/* with fetch
 async function fetchAuthToken(): Promise<string | null> {
   try {
     const res = await fetch("/api/auth/tokens", {
@@ -41,7 +41,6 @@ authAxiosInstance.interceptors.request.use(
   async (
     config: InternalAxiosRequestConfig,
   ): Promise<InternalAxiosRequestConfig> => {
-    // If it's an /api/auth/* route, attach token
     const token = await fetchAuthToken();
 
     if (token && config.headers) {
@@ -90,3 +89,33 @@ authAxiosInstance.interceptors.response.use(
     return Promise.reject(error);
   },
 );
+
+async function safeRequestWithTimeout(
+  axiosInstance: any,
+  config: AxiosRequestConfig,
+) {
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 5000);
+
+  try {
+    const response = await axiosInstance.request({
+      ...config,
+      signal: controller.signal,
+    });
+    clearTimeout(timeoutId);
+    return { success: true, data: response.data };
+  } catch (error) {
+    clearTimeout(timeoutId);
+    return { success: false, error: extractErrorMessage(error) };
+  }
+}
+
+async function safeRequest(config: AxiosRequestConfig) {
+  return await safeRequestWithTimeout(axiosInstance, config);
+}
+
+async function safeAuthRequest(config: AxiosRequestConfig) {
+  return await safeRequestWithTimeout(authAxiosInstance, config);
+}
+
+export { authAxiosInstance, axiosInstance, safeRequest, safeAuthRequest };

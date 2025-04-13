@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
-import { axiosInstance } from "@/app/lib/axiosInstance";
+import { safeRequest } from "@/app/lib/axiosInstance";
 
 export async function POST() {
   try {
@@ -14,17 +14,12 @@ export async function POST() {
       );
     }
 
-    const res = await axiosInstance.post(
-      "/auth/refresh-token",
-      {
+    const res = await safeRequest({
+      url: "/auth/refresh-token",
+      data: {
         refreshToken: refreshToken,
       },
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      },
-    );
+    });
 
     const { access, refresh } = res.data?.data;
 

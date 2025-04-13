@@ -1,14 +1,14 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { authAxiosInstance } from "@/app/lib/axiosInstance";
+import { safeAuthRequest } from "@/app/lib/axiosInstance";
 
 export default function Courses() {
   const [res, setRes] = useState<any>();
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await authAxiosInstance.get("/users/me");
+        const res = await safeAuthRequest({ url: "/users/me" });
         setRes(res);
         console.log(res.data);
       } catch (err) {

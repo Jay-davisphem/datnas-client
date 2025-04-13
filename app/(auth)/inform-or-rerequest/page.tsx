@@ -1,7 +1,7 @@
 "use client";
 import { openSans } from "@/app/ui/fonts";
 import { useState } from "react";
-import { axiosInstance } from "@/app/lib/axiosInstance";
+import { safeRequest } from "@/app/lib/axiosInstance";
 import { Button } from "@headlessui/react";
 import { useTempData } from "@/app/lib/contexts/tempData.context";
 import { extractErrorMessage } from "@/app/lib/utils/errorUtils";
@@ -32,13 +32,14 @@ export default function EmailVerification() {
         throw new Error("Email not found.");
       }
 
-      const res = await axiosInstance.post(
-        "/auth/register",
-        { email },
-        { params },
-      );
+      const res = await safeRequest({
+        method: "post",
+        url: "/auth/register",
+        data: { email },
+        params: params,
+      });
       console.log(res.data, "resend response");
-      setResendState({ loading: false, success: true, error: null });
+      setResendState({ loading: false, success: true, error: res.error! });
     } catch (error: any) {
       setResendState({
         loading: false,
