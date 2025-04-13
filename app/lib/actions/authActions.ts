@@ -33,7 +33,6 @@ function responseError(prevState: any, message: string, error?: string) {
 // --- Actions ---
 
 export async function signUpAction(prevState: any, formData: FormData) {
-  try {
     const password = getFormField(formData, "password");
     const confirmPassword = getFormField(formData, "confirmPassword");
 
@@ -47,39 +46,28 @@ export async function signUpAction(prevState: any, formData: FormData) {
     const body = { fullName, email, password };
     const params = { url: `${process.env.ORIGIN_URL ||   process.env.NEXT_PUBLIC_ORIGIN_URL}/verify-account` };
 
-    await safeRequest({
+    const res = await safeRequest({
       method: "post",
       url: "/auth/register",
       data: body,
       params: params,
     });
-
+    if (!res.success){
+      return responseError(prevState, "Registration failed.", res.error);
+    }
     return { email };
-  } catch (err: any) {
-    return responseError(prevState, "Registration failed.", err);
-  }
 }
 
 export async function resendVerification(email: string, key: string) {
-  try {
-    const response = await safeRequest({
+    return await safeRequest({
       method: "post",
       url: "/auth/activate-user",
       data: { email, key },
     });
-
-    return response; // Already structured with { success, data }
-  } catch (error: any) {
-    return {
-      success: false,
-      error,
-    };
-  }
 }
 
 export async function signInAction(prevState: any, formData: FormData) {
   const cook = await cookies();
-  try {
     const email = getFormField(formData, "email");
     const password = getFormField(formData, "password");
 
@@ -115,23 +103,22 @@ export async function signInAction(prevState: any, formData: FormData) {
       ...cookieOptions,
       expires: refreshTokenExpires,
     });
-
+    if (!res.success){
+      return responseError(prevState, "Sign in failed.", res.error);
+    }
+    
     return {
       ...prevState,
       success: true,
       accessToken,
       refreshToken,
     };
-  } catch (error: any) {
-    return responseError(prevState, "Sign in failed.", error);
-  }
 }
 
 export async function passwordResetRequestAction(
   prevState: any,
   formData: FormData,
 ) {
-  try {
     const email = getFormField(formData, "email");
 
     if (!email) {
@@ -143,21 +130,22 @@ export async function passwordResetRequestAction(
     }
 
     const params = { url: `${process.env.ORIGIN_URL ||   process.env.NEXT_PUBLIC_ORIGIN_URL}/password-reset` };
-    await safeRequest({
+    const res = await safeRequest({
       method: "post",
       url: "/auth/request-password-reset",
       data: { email },
       params: params,
     });
 
+    if (!res.success){
+      return responseError(prevState, "Password reset request failed.", res.error);
+    }
     return {
       ...prevState,
-      success: true,
-      message: "Password reset link sent to your email.",
+      success: res.success,
+      message: res.data?.message,
     };
-  } catch (error: any) {
-    return responseError(prevState, "Password reset request failed.", error);
-  }
+
 }
 
 export async function passwordResetAction(
@@ -167,7 +155,6 @@ export async function passwordResetAction(
   token: string,
 ) {
   const cook = await cookies();
-  try {
     const newPassword = getFormField(formData, "password");
     const confirmPassword = getFormField(formData, "confirmPassword");
 
@@ -187,7 +174,7 @@ export async function passwordResetAction(
       );
     }
 
-    await safeRequest({
+    const res = await safeRequest({
       method: "post",
       url: "/auth/verify-reset-password",
       data: { email: user, token, newPassword },
@@ -197,18 +184,17 @@ export async function passwordResetAction(
       ...cookieOptions,
       maxAge: 60,
     });
-
+    if (!res.success){
+      cook.set("passwordResetSuccess", "false", {
+        ...cookieOptions,
+        maxAge: 60,
+      });
+  
+      return responseError(prevState, "Password reset failed.", res.error);
+    }
     return {
       ...prevState,
       success: true,
       message: "Password reset successful.",
     };
-  } catch (error: any) {
-    cook.set("passwordResetSuccess", "false", {
-      ...cookieOptions,
-      maxAge: 60,
-    });
-
-    return responseError(prevState, "Password reset failed.", error);
-  }
 }
