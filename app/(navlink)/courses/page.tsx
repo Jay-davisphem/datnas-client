@@ -1,7 +1,6 @@
 'use client'
 import { safeRequest } from "@/app/lib/axiosInstance";
 import CourseCategories from "@/app/ui/body/home/CourseCategories";
-import CourseCategory, { ICourseCategory } from "@/app/ui/body/home/courses/CourseCategory";
 import categories from "./data";
 import VideosCard from "@/app/ui/VideosCard";
 export default function Courses() {

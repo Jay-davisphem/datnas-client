@@ -6,6 +6,8 @@ import VideoCard from "./VideoCard";
 import { FaArrowRight } from "react-icons/fa6";
 import { useEffect, useRef, useState } from "react";
 import Pagination from "./Pagination";
+import Link from "next/link";
+import { toSlug } from "../utils";
 
 interface CourseWithPaginationProps {
   course: ICourseCategory;
@@ -37,11 +39,11 @@ function CourseWithPagination({ course, videosPerPage }: CourseWithPaginationPro
   return (
     <div ref={sectionRef} className="flex flex-col gap-2 text-sm font-bold scroll-mt-20">
       {/* Course Title */}
-      <div className="flex gap-1 items-center">
+      <Link  href={`/course/${toSlug(course?.courseTitle)}`} className="flex gap-1 items-center focus:underline hover:underline">
         <span className="text-gray-400">Course</span>
         <FaArrowRight className="text-gray-400" />
         <span>{course?.courseTitle}</span>
-      </div>
+      </Link>
 
       {/* Animated Video Grid */}
       <AnimatePresence mode="wait">
