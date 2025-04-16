@@ -6,6 +6,7 @@ import { openSans } from "../../fonts";
 import ScaleUpParagraph from "../../AnimatedP";
 import MissionCard, { IMission } from "./MissionCard";
 import CourseCategory, { ICourseCategory } from "./courses/CourseCategory";
+import categories from "@/app/(navlink)/courses/data";
 export async function AboutUs1() {
   // send fetch get request to /api/auth/tokens, and extract accessToken out
 
@@ -66,6 +67,7 @@ export function AboutUs2() {
           alt="About us 2"
           width={100}
           height={100}
+          objectFit="cover"
           className="w-full"
         />
       </div>
@@ -139,6 +141,7 @@ export function AboutUs3() {
           alt="underline our mission"
           width={100}
           height={10}
+          objectFit="cover"
           className="w-2/4 text-center border"
         />
       </div>
@@ -183,6 +186,7 @@ export function AboutUs4() {
           src="/vision.svg"
           alt="Vison image"
           width={100}
+          objectFit="cover"
           height={100}
           className="w-full"
         />
@@ -190,46 +194,8 @@ export function AboutUs4() {
     </div>
   );
 }
-
 export function AboutUs5() {
-  const categories: ICourseCategory[] = [
-    {
-      thumbnail: "/heart.jpeg",
-      category: "The Heart",
-      discussionComments: 45,
-      discussionLikes: 567,
-      rating: 4.56,
-      courseTitle:
-        "Microscopic structure of cardiac muscle tissue and its unique properties",
-    },
-    {
-      thumbnail: "/neural.jpeg",
-      category: "The Brain",
-      discussionComments: 4,
-      discussionLikes: 23,
-      rating: 3.5,
-      courseTitle:
-        "The intricate network of neural pathways and their role in cognition",
-    },
-    {
-      thumbnail: "/heart.jpeg",
-      category: "The Heart",
-      discussionComments: 45,
-      discussionLikes: 567,
-      rating: 4.56,
-      courseTitle:
-        "Microscopic structure of cardiac muscle tissue and its unique properties",
-    },
-    {
-      thumbnail: "/neural.jpeg",
-      category: "The Brain",
-      discussionComments: 4,
-      discussionLikes: 23,
-      rating: 2.1,
-      courseTitle:
-        "The intricate network of neural pathways and their role in cognition",
-    },
-  ];
+  
   return (
     <div className="mb-2 bg-white w-full flex flex-col items-center px-6 md:px-16 lg:px-32 py-16 md:py-24 gap-16">
       <div className="flex flex-col w-full md:w-3/5 text-center justify-center items-center">
@@ -247,7 +213,7 @@ export function AboutUs5() {
         />
       </div>
       <div className="flex flex-col w-full justify-between md:flex-row flex-wrap gap-8">
-        {categories.map((category, index) => (
+        {[...(categories[0]?.courses ?? []), ...(categories[1]?.courses ?? []), ...(categories[3]?.courses ?? [])].map((category, index) => (
           <CourseCategory key={index} {...category} />
         ))}
       </div>

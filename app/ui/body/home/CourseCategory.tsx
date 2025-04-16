@@ -1,14 +1,15 @@
 import Image from "next/image";
 import Link from "next/link";
 import { openSans } from "../../fonts";
+import { ICourseCategory as ICourse } from "./courses/CourseCategory";
 
-export type ICourseCategory = { slug: string; name: string; imgUrl: string };
+export type ICourseCategory = { slug: string; name: string; imgUrl: string, courses?: ICourse[] };
 
 export function CourseCategory({ slug, name, imgUrl }: ICourseCategory) {
   return (
     <Link
       href={`/courses?cat=${slug}`}
-      className={`rounded-lg flex flex-row items-center justify-between w-full ${openSans.className} bg-white h-20 hover:opaque-80 active:opaque-80`}
+      className={`w-full md:w-fit rounded-lg flex flex-row items-center justify-between ${openSans.className} bg-white h-20 hover:opaque-80 active:opaque-80`}
     >
       <Image
         alt={name}

@@ -93,22 +93,38 @@ authAxiosInstance.interceptors.response.use(
 async function safeRequestWithTimeout(
   axiosInstance: any,
   config: AxiosRequestConfig,
-) {
-  const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), 5000);
+  retries: number = 3,
+): Promise<{ success: boolean; data?: any; error?: string }> {
+  let attempts = 0;
 
-  try {
-    const response = await axiosInstance.request({
-      ...config,
-      signal: controller.signal,
-    });
-    clearTimeout(timeoutId);
-    return { success: true, data: response.data };
-  } catch (error) {
-    clearTimeout(timeoutId);
-    return { success: false, error: extractErrorMessage(error) };
+  while (attempts <= retries) {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 5000);
+
+    try {
+      const response = await axiosInstance.request({
+        ...config,
+        signal: controller.signal,
+      });
+      clearTimeout(timeoutId);
+      return { success: true, data: response.data };
+    } catch (error: any) {
+      clearTimeout(timeoutId);
+
+      if (error?.name === 'AbortError') {
+        console.log(`Request timed out (Attempt ${attempts + 1}). Retrying...`);
+        attempts++;
+        await new Promise(resolve => setTimeout(resolve, 1000)); // Wait for 1 second before retrying
+        continue; 
+      } else {
+        return { success: false, error: extractErrorMessage(error) };
+      }
+    }
   }
+
+  return { success: false, error: 'Request failed after multiple retries due to timeouts.' };
 }
+
 
 async function safeRequest(config: AxiosRequestConfig) {
   return await safeRequestWithTimeout(axiosInstance, config);

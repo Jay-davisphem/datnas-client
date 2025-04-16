@@ -14,7 +14,9 @@ export default function Home() {
       <HomeSection1 />
       <HomeSection2 />
       <HomeSection3 />
-      <CourseCategories />
+      <div className="p-6 md:p-16 lg:p-32 text-white">
+        <CourseCategories />
+      </div>
       <AdsSection />
       <WhyChooseUs />
       <SayingsAboutUs />

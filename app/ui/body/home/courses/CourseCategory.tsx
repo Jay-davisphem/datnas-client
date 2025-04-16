@@ -4,6 +4,7 @@ import Link from "next/link";
 import { IoThumbsUpOutline } from "react-icons/io5";
 import { BiCommentDetail } from "react-icons/bi";
 import dynamic from "next/dynamic";
+import { IVideoCard } from "@/app/ui/VideoCard";
 
 const StarRating = dynamic(() => import("./StarRating"), { ssr: false });
 
@@ -14,6 +15,7 @@ export type ICourseCategory = {
   rating: number;
   discussionLikes: number;
   discussionComments: number;
+  videos?: IVideoCard[]
 };
 export default function CourseCategory({
   thumbnail,
@@ -25,7 +27,7 @@ export default function CourseCategory({
 }: ICourseCategory) {
   return (
     <Link
-      className="flex flex-col rounded shadow-md w-full min-sm:w-2/5 lg:w-3/10 xl:w-2/10 hover:shadow-lg pb-4"
+      className="flex flex-col justify-between rounded shadow-md w-full min-sm:w-2/5 lg:w-3/10 xl:w-2/10 hover:shadow-lg pb-4"
       href="/courses"
     >
       <Image
@@ -33,6 +35,7 @@ export default function CourseCategory({
         alt={category + courseTitle + thumbnail}
         width={200}
         height={100}
+        objectFit="cover"
         className="rounded-t w-full h-40"
       />
       <div className="px-2 mt-4 ">

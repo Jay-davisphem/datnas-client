@@ -1,41 +1,19 @@
 import { ICourseCategory, CourseCategory } from "./CourseCategory";
-
-export default function CourseCategories() {
-  const coursesCategories: ICourseCategory[] = [
-    {
-      slug: "digestive-system",
-      name: "The Digestive System",
-      imgUrl: "/cardio.svg",
-    },
-    {
-      slug: "blood-blood-vessels",
-      name: "Blood and Blood Vessels",
-      imgUrl: "/heamoglobin.svg",
-    },
-    {
-      slug: "skeletal-system",
-      name: "The Skeletal System",
-      imgUrl: "/skeleton.svg",
-    },
-    {
-      slug: "bones-and-joints",
-      name: "Bones and Joints",
-      imgUrl: "/bones-and-joints.svg",
-    },
-  ];
+import coursesCategories from "@/app/(navlink)/courses/data";
+export default function CourseCategories({gray = false}) {
   return (
-    <div className="p-6 md:p-16 lg:p-32 flex flex-col items-start md:justify-between gap-6 lg:gap-8">
-      <h2 className="text-white underline text-3xl font-bold">
+    <div className={`flex flex-col items-start md:justify-between ${gray?'gap-2 lg:gap-4':'gap-6 lg:gap-8'}`}>
+      <h2 className={`${gray?'font-medium':'underline font-bold'} text-3xl`}>
         Course Categories
       </h2>
-      <div className="w-full flex flex-col lg:flex-row gap-8">
+      <div className={`${gray ? 'bg-gray-100 shadow-sm p-[2px]' : ''} flex flex-col w-full justify-between flex-wrap lg:flex-row gap-4 text-black`}> 
         {coursesCategories.map(({ name, slug, imgUrl }) => (
-          <CourseCategory
-            key={name + slug + imgUrl}
-            name={name}
-            slug={slug}
-            imgUrl={imgUrl}
-          />
+            <CourseCategory 
+              key={name + slug + imgUrl}
+              name={name} 
+              slug={slug} 
+              imgUrl={imgUrl} 
+            />
         ))}
       </div>
     </div>
