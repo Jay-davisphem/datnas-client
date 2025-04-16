@@ -8,18 +8,18 @@ export type ICourseCategory = { slug: string; name: string; imgUrl: string, cour
 export function CourseCategory({ slug, name, imgUrl }: ICourseCategory) {
   return (
     <Link
-      href={`/courses?cat=${slug}`}
-      className={`w-full md:w-fit rounded-lg flex flex-row items-center justify-between ${openSans.className} bg-white h-20 hover:opaque-80 active:opaque-80`}
+      href={`/courses/#${slug}`}
+      className={`rounded-lg flex flex-row items-center lg:w-3/10 xl:w-4/20 md:w-4/20 ${openSans.className} bg-white h-20 hover:opaque-80 active:opaque-80`}
     >
       <Image
         alt={name}
         width={100}
         height={100}
         src={imgUrl}
-        className="rounded-lg h-full w-[20%] object-cover"
+        className="rounded-lg h-full w-16 object-cover"
       />
-      <div className="text-lg p-8 text-start self-center w-[80%]">
-        <p className="w-[70%]">{name}</p>
+      <div className="text-lg text-start self-center">
+        <p className="p-6">{name}</p>
       </div>
     </Link>
   );

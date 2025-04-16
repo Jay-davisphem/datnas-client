@@ -6,12 +6,12 @@ export default function CourseCategories({gray = false}) {
       <h2 className={`${gray?'font-medium':'underline font-bold'} text-3xl`}>
         Course Categories
       </h2>
-      <div className={`${gray ? 'bg-gray-100 shadow-sm p-[2px]' : ''} flex flex-col w-full justify-between flex-wrap lg:flex-row gap-4 text-black`}> 
+      <div className={`${gray ? 'bg-gray-100 shadow-sm p-[2px]' : 'justify-between'} flex flex-col w-full flex-wrap lg:flex-row gap-4 text-black`}> 
         {coursesCategories.map(({ name, slug, imgUrl }) => (
             <CourseCategory 
               key={name + slug + imgUrl}
               name={name} 
-              slug={slug} 
+              slug={name} 
               imgUrl={imgUrl} 
             />
         ))}

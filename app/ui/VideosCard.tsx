@@ -1,7 +1,11 @@
+'use client'
+import { IC } from "../(navlink)/courses/data";
+import { motion, AnimatePresence } from "framer-motion";
 import { ICourseCategory, IVideoCard } from "../(navlink)/courses/data";
 import VideoCard from "./VideoCard";
 import { FaArrowRight } from "react-icons/fa6";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import Pagination from "./Pagination";
 
 interface CourseWithPaginationProps {
   course: ICourseCategory;
@@ -19,12 +23,19 @@ function CourseWithPagination({ course, videosPerPage }: CourseWithPaginationPro
   const endIndex = startIndex + videosPerPage;
   const currentVideos = videos.slice(startIndex, endIndex);
 
+  const sectionRef = useRef<HTMLDivElement>(null);
+
   const handlePageChange = (newPage: number) => {
     setCurrentPage(newPage);
   };
 
+  // Scroll to the grid when page changes
+  useEffect(() => {
+    sectionRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, [currentPage]);
+
   return (
-    <div className="flex flex-col gap-2 text-sm font-bold">
+    <div ref={sectionRef} className="flex flex-col gap-2 text-sm font-bold scroll-mt-20">
       {/* Course Title */}
       <div className="flex gap-1 items-center">
         <span className="text-gray-400">Course</span>
@@ -32,59 +43,53 @@ function CourseWithPagination({ course, videosPerPage }: CourseWithPaginationPro
         <span>{course?.courseTitle}</span>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-8">
-        {currentVideos.map(({ thumbnail, ...others }: IVideoCard, index) => (
-          <VideoCard
-            key={index}
-            {...others}
-            thumbnail={course.thumbnail || ""}
-            courseTitle={course.courseTitle || ""}
-          />
-        ))}
-      </div>
+      {/* Animated Video Grid */}
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={currentPage}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -10 }}
+          transition={{ duration: 0.3 }}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-8"
+        >
+          {currentVideos.map(({ thumbnail, ...others }: IVideoCard) => (
+            <VideoCard
+              key={others.videoTitle}
+              {...others}
+              thumbnail={course.thumbnail || ""}
+              courseTitle={course.courseTitle || ""}
+            />
+          ))}
+        </motion.div>
+      </AnimatePresence>
 
-      {/* Pagination Controls for each course */}
+      {/* Pagination Controls */}
       {totalPages > 1 && (
-        <div className="flex justify-center items-center gap-4 mt-4">
-          <button
-            onClick={() => handlePageChange(currentPage - 1)}
-            disabled={currentPage === 1}
-            className="px-4 py-2 rounded-md bg-gray-100 text-gray-700 hover:bg-gray-200 disabled:opacity-50"
-          >
-            Previous
-          </button>
-          <span>
-            {currentPage} of {totalPages}
-          </span>
-          <button
-            onClick={() => handlePageChange(currentPage + 1)}
-            disabled={currentPage === totalPages}
-            className="px-4 py-2 rounded-md bg-gray-100 text-gray-700 hover:bg-gray-200 disabled:opacity-50"
-          >
-            Next
-          </button>
-        </div>
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={handlePageChange}
+        />
       )}
     </div>
   );
 }
-
 // The main VideosCard component remains the same:
-import { IC } from "../(navlink)/courses/data";
 
 interface VideosCardProps {
   category: IC;
-  videosPerPage?: number; 
+  videosPerPage?: number;
 }
 
-export default function VideosCard({ category, videosPerPage = 5 }: VideosCardProps) {
+export default function VideosCard({ category, videosPerPage = 6 }: VideosCardProps) {
   return (
     <div className="flex flex-col gap-8">
       {/* Category Title */}
       <div className="text-sm font-bold flex flex-col gap-2">
         <div className="flex flex-col gap-1">
           <span className="text-gray-400">Category</span>
-          <span className="font-black text-4xl">{category?.name}</span>
+          <span className="font-black text-4xl" id={`${category.name}`}>{category?.name}</span>
         </div>
       </div>
       {/* Course Grouping */}
