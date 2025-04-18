@@ -6,7 +6,7 @@ import { openSans } from "../../fonts";
 import ScaleUpParagraph from "../../AnimatedP";
 import MissionCard, { IMission } from "./MissionCard";
 import CourseCategory, { ICourseCategory } from "./courses/CourseCategory";
-import categories from "@/app/(navlink)/courses/data";
+import categories from "@/app/lib/contexts/data";
 export async function AboutUs1() {
   // send fetch get request to /api/auth/tokens, and extract accessToken out
 

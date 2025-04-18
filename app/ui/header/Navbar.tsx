@@ -14,7 +14,7 @@ export default function Navbar() {
   const router = useRouter();
 
   const handleLogout = async () => {
-    await signOut();
+    signOut();
     router.push("/");
   };
 

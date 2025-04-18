@@ -1,7 +1,7 @@
 'use client'
-import { IC } from "../(navlink)/courses/data";
+import { IC } from "../lib/contexts/data";
 import { motion, AnimatePresence } from "framer-motion";
-import { ICourseCategory, IVideoCard } from "../(navlink)/courses/data";
+import { ICourseCategory, IVideoCard } from "../lib/contexts/data";
 import VideoCard from "./VideoCard";
 import { FaArrowRight } from "react-icons/fa6";
 import { useEffect, useRef, useState } from "react";
@@ -39,7 +39,7 @@ function CourseWithPagination({ course, videosPerPage }: CourseWithPaginationPro
   return (
     <div ref={sectionRef} className="flex flex-col gap-2 text-sm font-bold scroll-mt-20">
       {/* Course Title */}
-      <Link  href={`/course/${toSlug(course?.courseTitle)}`} className="flex gap-1 items-center focus:underline hover:underline">
+      <Link  href={`/course/${toSlug(course?.courseTitle)}`} className="flex gap-1 items-center focus:border-b hover:border-b max-w-max">
         <span className="text-gray-400">Course</span>
         <FaArrowRight className="text-gray-400" />
         <span>{course?.courseTitle}</span>

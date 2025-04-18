@@ -11,7 +11,6 @@ export default function NotFound() {
         alt="Confused Stethoscope"
         width={200}
         height={200}
-        className="mb-4 mix-blend-multiply"
         />
 
 
