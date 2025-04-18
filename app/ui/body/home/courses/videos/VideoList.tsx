@@ -20,7 +20,7 @@ export default function VideoList({
 }) {
   const router = useRouter();
   return (
-    <div className="bg-white pt-4 px-4 md:col-span-4 rounded-md flex flex-col h-[calc(100vh - 150px)] overflow-y-auto">
+    <div className="bg-white pt-4 md:col-span-4 rounded-md flex flex-col h-[calc(100vh - 150px)] overflow-y-auto">
       {" "}
       {/* Added height and overflow */}
       <div className="flex flex-col gap-1 sticky top-0 bg-white z-10 pb-2">
