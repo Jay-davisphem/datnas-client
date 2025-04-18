@@ -27,7 +27,7 @@ export default function VideoList({
         {" "}
         {/* Sticky header */}
         <h2 className="text-2xl font-bold">Course Videos</h2>
-        <span className="flex gap-1 items-end justify-between text-base">
+        <span className="flex gap-1 items-end justify-between text-sm md:text-base">
           <span className="flex gap-2 items-center">
             <span className="">{course?.category}</span>
             <FaArrowRight className="" />

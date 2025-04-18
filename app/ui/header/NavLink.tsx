@@ -25,7 +25,6 @@ export default function NavLink({ name, url }: { name: string; url: string }) {
   );
 }
 
-// <Link href='/settings'>Account settings</Link>
 
 export function NavLink2({
   name,
@@ -80,7 +79,7 @@ export function NavLink3({
       {name}
     </p>
   ) : (
-    <Linkco
+    <Link
       href={url}
       className={`text-sm lg:text-base text ${isActive ? "border-b-2" : ""}`}
       onClick={onClick}
