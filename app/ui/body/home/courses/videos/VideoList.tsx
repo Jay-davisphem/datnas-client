@@ -33,7 +33,7 @@ export default function VideoList({
             <FaArrowRight className="" />
             <span className="text-gray-400">{course?.courseTitle}</span>
           </span>
-          <span className="focus:underline hover:underline text-[10px] cursor-pointer text-[#004CE8] shrink-0">
+          <span className="focus:underline hover:underline text-[10px] cursor-pointer text-[#004CE8]">
             course description
           </span>
         </span>

@@ -80,7 +80,7 @@ export function NavLink3({
       {name}
     </p>
   ) : (
-    <Link
+    <Linkco
       href={url}
       className={`text-sm lg:text-base text ${isActive ? "border-b-2" : ""}`}
       onClick={onClick}
