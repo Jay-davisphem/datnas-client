@@ -55,7 +55,7 @@ export default function VideoContainer({
           />
         </div>
       ) : (
-        <div className="flex items-center aspect-video justify-center h-full bg-gray-100 text-gray-500">
+        <div className="text-base md:text-lg flex items-center aspect-video justify-center h-full bg-gray-100 text-gray-500">
           Click on a video from the list to play it here.
         </div>
       )}

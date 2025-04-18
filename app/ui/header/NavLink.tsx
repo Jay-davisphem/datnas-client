@@ -74,7 +74,7 @@ export function NavLink3({
       : pathname === url;
   return url === "/classroom" ? (
     <p
-      className={`text-base cursor-pointer ${isActive ? "border-b-2" : ""}`}
+      className={`text-sm cursor-pointer ${isActive ? "border-b-2" : ""}`}
       onClick={() => onClick && onClick()}
     >
       {name}
@@ -82,7 +82,7 @@ export function NavLink3({
   ) : (
     <Link
       href={url}
-      className={`text-base ${isActive ? "border-b-2" : ""}`}
+      className={`text-sm lg:text-base text ${isActive ? "border-b-2" : ""}`}
       onClick={onClick}
     >
       {name}
