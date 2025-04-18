@@ -25,7 +25,6 @@ export default function NavLink({ name, url }: { name: string; url: string }) {
   );
 }
 
-
 export function NavLink2({
   name,
   url,

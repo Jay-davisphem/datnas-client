@@ -12,7 +12,7 @@ export default function VideoItem({ video, isPlaying }: VideoItemProps) {
   const color = isPlaying ? "text-white" : "bg-black";
   return (
     <div
-      className={`p-1 rounded flex items-center drop-shadow-sm gap-4 ${backgroundColor} ${color}`}
+      className={`p-1 rounded flex items-center drop-shadow-sm border  md:border-none border-gray-150 gap-4 ${backgroundColor} ${color}`}
     >
       {" "}
       {/* Apply conditional class */}

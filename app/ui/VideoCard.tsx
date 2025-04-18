@@ -4,6 +4,7 @@ import Link from "next/link";
 import { MdOutlinePlayCircle } from "react-icons/md";
 import { GrView } from "react-icons/gr";
 import dynamic from "next/dynamic";
+import { toSlug } from "../utils";
 
 const StarRating = dynamic(
   () => import("@/app/ui/body/home/courses/StarRating"),
@@ -27,11 +28,22 @@ export default function VideoCard({
   rating,
   view,
   courseTitle,
+  videoUrl,
+  description,
 }: IVideoCard) {
+  const linkPath = videoUrl
+    ? `/course/${toSlug(courseTitle!)}?${new URLSearchParams({
+        videoUrl: videoUrl,
+        videoTitle: videoTitle || "",
+        videoDescription: description || "",
+        videoThumbnail: thumbnail || "",
+      }).toString()}`
+    : "/course";
+
   return (
     <Link
-      className="flex flex-col justify-between rounded shadow-md w-full  hover:shadow-lg pb-4"
-      href="/courses"
+      href={linkPath}
+      className="flex flex-col justify-between rounded shadow-md w-full  hover:shadow-lg pb-4 cursor-pointer"
     >
       <div className="relative">
         <Image
