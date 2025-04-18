@@ -111,20 +111,22 @@ async function safeRequestWithTimeout(
     } catch (error: any) {
       clearTimeout(timeoutId);
 
-      if (error?.name === 'AbortError') {
+      if (error?.name === "AbortError") {
         console.log(`Request timed out (Attempt ${attempts + 1}). Retrying...`);
         attempts++;
-        await new Promise(resolve => setTimeout(resolve, 1000)); // Wait for 1 second before retrying
-        continue; 
+        await new Promise((resolve) => setTimeout(resolve, 1000)); // Wait for 1 second before retrying
+        continue;
       } else {
         return { success: false, error: extractErrorMessage(error) };
       }
     }
   }
 
-  return { success: false, error: 'Request failed after multiple retries due to timeouts.' };
+  return {
+    success: false,
+    error: "Request failed after multiple retries due to timeouts.",
+  };
 }
-
 
 async function safeRequest(config: AxiosRequestConfig) {
   return await safeRequestWithTimeout(axiosInstance, config);

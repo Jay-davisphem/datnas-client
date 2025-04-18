@@ -3,7 +3,12 @@ import Link from "next/link";
 import { openSans } from "../../fonts";
 import { ICourseCategory as ICourse } from "./courses/CourseCategory";
 
-export type ICourseCategory = { slug: string; name: string; imgUrl: string, courses?: ICourse[] };
+export type ICourseCategory = {
+  slug: string;
+  name: string;
+  imgUrl: string;
+  courses?: ICourse[];
+};
 
 export function CourseCategory({ slug, name, imgUrl }: ICourseCategory) {
   return (

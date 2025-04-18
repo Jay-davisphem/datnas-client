@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { motion } from "framer-motion";
 
 interface PaginationProps {
   currentPage: number;
@@ -10,7 +10,7 @@ const buttonVariants = {
   initial: { scale: 1, opacity: 0.8 },
   hover: { scale: 1.05, opacity: 1 },
   active: { scale: 0.95 },
-  disabled: { opacity: 0.5, pointerEvents: 'none' as 'none' },
+  disabled: { opacity: 0.5, pointerEvents: "none" as "none" },
 };
 
 const pageNumberVariants = {
@@ -18,7 +18,11 @@ const pageNumberVariants = {
   hover: { opacity: 1, scale: 1.1 },
 };
 
-const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, onPageChange }) => {
+const Pagination: React.FC<PaginationProps> = ({
+  currentPage,
+  totalPages,
+  onPageChange,
+}) => {
   if (totalPages <= 1) {
     return null;
   }
@@ -37,7 +41,7 @@ const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, onPage
         initial="initial"
         whileHover="hover"
         whileTap="active"
-        animate={currentPage === 1 ? 'disabled' : 'initial'}
+        animate={currentPage === 1 ? "disabled" : "initial"}
         className="px-4 py-2 rounded-md bg-gray-100 text-gray-700 hover:bg-gray-200 disabled:cursor-not-allowed"
       >
         Previous
@@ -57,7 +61,7 @@ const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, onPage
         initial="initial"
         whileHover="hover"
         whileTap="active"
-        animate={currentPage === totalPages ? 'disabled' : 'initial'}
+        animate={currentPage === totalPages ? "disabled" : "initial"}
         className="px-4 py-2 rounded-md bg-gray-100 text-gray-700 hover:bg-gray-200 disabled:cursor-not-allowed"
       >
         Next

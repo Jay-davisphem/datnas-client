@@ -15,7 +15,7 @@ export type ICourseCategory = {
   rating: number;
   discussionLikes: number;
   discussionComments: number;
-  videos?: IVideoCard[]
+  videos?: IVideoCard[];
 };
 export default function CourseCategory({
   thumbnail,

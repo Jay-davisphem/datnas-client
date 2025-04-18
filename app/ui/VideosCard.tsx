@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import { IC } from "../lib/contexts/data";
 import { motion, AnimatePresence } from "framer-motion";
 import { ICourseCategory, IVideoCard } from "../lib/contexts/data";
@@ -14,7 +14,10 @@ interface CourseWithPaginationProps {
   videosPerPage: number;
 }
 
-function CourseWithPagination({ course, videosPerPage }: CourseWithPaginationProps) {
+function CourseWithPagination({
+  course,
+  videosPerPage,
+}: CourseWithPaginationProps) {
   const [currentPage, setCurrentPage] = useState(1);
 
   const videos = course?.videos || [];
@@ -37,9 +40,15 @@ function CourseWithPagination({ course, videosPerPage }: CourseWithPaginationPro
   }, [currentPage]);
 
   return (
-    <div ref={sectionRef} className="flex flex-col gap-2 text-sm font-bold scroll-mt-20">
+    <div
+      ref={sectionRef}
+      className="flex flex-col gap-2 text-sm font-bold scroll-mt-20"
+    >
       {/* Course Title */}
-      <Link  href={`/course/${toSlug(course?.courseTitle)}`} className="flex gap-1 items-center focus:border-b hover:border-b max-w-max">
+      <Link
+        href={`/course/${toSlug(course?.courseTitle)}`}
+        className="flex gap-1 items-center focus:border-b hover:border-b max-w-max"
+      >
         <span className="text-gray-400">Course</span>
         <FaArrowRight className="text-gray-400" />
         <span>{course?.courseTitle}</span>
@@ -84,14 +93,19 @@ interface VideosCardProps {
   videosPerPage?: number;
 }
 
-export default function VideosCard({ category, videosPerPage = 6 }: VideosCardProps) {
+export default function VideosCard({
+  category,
+  videosPerPage = 6,
+}: VideosCardProps) {
   return (
     <div className="flex flex-col gap-8">
       {/* Category Title */}
       <div className="text-sm font-bold flex flex-col gap-2">
         <div className="flex flex-col gap-1">
           <span className="text-gray-400">Category</span>
-          <span className="font-black text-4xl" id={`${category.name}`}>{category?.name}</span>
+          <span className="font-black text-4xl" id={`${category.name}`}>
+            {category?.name}
+          </span>
         </div>
       </div>
       {/* Course Grouping */}

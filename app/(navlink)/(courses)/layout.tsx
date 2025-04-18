@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import { CourseProvider } from "@/app/lib/contexts/CourseContext";
 
 export default function Layout({
@@ -6,9 +6,5 @@ export default function Layout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return (
-    <CourseProvider>
-      {children}
-    </CourseProvider>
-  );
+  return <CourseProvider>{children}</CourseProvider>;
 }

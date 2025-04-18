@@ -1,53 +1,66 @@
 "use client";
 import { createContext, useState, useEffect, useContext } from "react";
-import coursesCategories, {IC} from "@/app/lib/contexts/data";
+import coursesCategories, { IC } from "@/app/lib/contexts/data";
 import { toSlug } from "@/app/utils";
 import { ICourseCategory } from "@/app/ui/body/home/CourseCategory";
 
 interface CourseContextType {
   loading: boolean;
-  courses: IC[],
-  getCourse: (slug: string) => Promise<ICourseCategory | {}>
+  courses: IC[];
+  lastViewedCourseSlug?: string;
+  getCourse: (slug: string) => Promise<ICourseCategory | undefined>;
 }
 
 const CourseContext = createContext<CourseContextType | undefined>(undefined);
 
 export const CourseProvider = ({ children }: { children: React.ReactNode }) => {
-  const [courses, setCourses]  = useState<IC[]>([])
+  const [courses, setCourses] = useState<IC[]>([]);
   const [loading, setLoading] = useState(true);
-  
+  const [lastViewedCourseSlug, setLastViewedCourseSlug] = useState<
+    string | undefined
+  >(undefined);
+
   useEffect(() => {
     const fetchCourses = async () => {
-      try{
+      try {
         // will later fetch, use dummy now
-        setCourses(coursesCategories)
-      } catch(err){
-        setCourses([])
+        setCourses(coursesCategories);
+      } catch (err) {
+        setCourses([]);
       } finally {
-        setLoading(false)
+        setLoading(false);
       }
+    };
+    fetchCourses();
+  }, [courses]);
+  // use loca l storage to store last viewed course slug
+  useEffect(() => {
+    const storedSlug = localStorage.getItem("lastViewedCourseSlug");
+    if (storedSlug) {
+      setLastViewedCourseSlug(storedSlug);
     }
-    fetchCourses()
-  }, [courses])
+  }, []);
 
-  
   const getCourse = async (slug: string) => {
-    let retCourse: ICourseCategory | {} = {}
+    let retCourse: ICourseCategory | undefined = undefined;
     courses.find((_course) => {
-        return _course?.courses?.map((course) => {
+      return _course?.courses?.find((course) => {
         if (toSlug(course.courseTitle) === slug) {
-          retCourse = course
-          return course
+          retCourse = course as unknown as ICourseCategory;
+          localStorage.setItem("lastViewedCourseSlug", slug);
+          setLastViewedCourseSlug(slug);
+          return course;
         }
-      })
-    })
-    return retCourse
-  }
-  
+      });
+    });
+    return retCourse;
+  };
+
   const value: CourseContextType = {
     loading,
     courses,
-    getCourse
+    getCourse,
+    lastViewedCourseSlug,
   };
 
   return (

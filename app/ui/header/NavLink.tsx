@@ -58,7 +58,6 @@ export function NavLink2({
   );
 }
 
-
 export function NavLink3({
   name,
   url,
@@ -69,20 +68,24 @@ export function NavLink3({
   onClick?: () => void;
 }) {
   const pathname = usePathname();
-  const isActive = pathname.startsWith('/course') && url === '/classroom'? true: pathname === url;
-  return (
-    (url === '/classroom'? <p      
+  const isActive =
+    pathname.startsWith("/course") && url === "/classroom"
+      ? true
+      : pathname === url;
+  return url === "/classroom" ? (
+    <p
       className={`text-base cursor-pointer ${isActive ? "border-b-2" : ""}`}
-      onClick={onClick}
+      onClick={() => onClick && onClick()}
     >
       {name}
-    </p> :<Link
+    </p>
+  ) : (
+    <Link
       href={url}
-      
       className={`text-base ${isActive ? "border-b-2" : ""}`}
       onClick={onClick}
     >
       {name}
-    </Link>)
+    </Link>
   );
 }

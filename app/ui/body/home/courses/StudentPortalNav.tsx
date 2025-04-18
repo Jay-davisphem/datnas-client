@@ -1,12 +1,24 @@
+"use client";
+import { useCourses } from "@/app/lib/contexts/CourseContext";
 import { NavLink3 } from "@/app/ui/header/NavLink";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 
-export default function StudentPortalNav({id}: {id?: string}) {
+export default function StudentPortalNav({ id }: { id?: string }) {
+  const { lastViewedCourseSlug } = useCourses();
+  const router = useRouter();
   return (
     <div className="flex gap-2 md:gap-8 lg:gap-16 justify-between md:justify-start bg-white pt-6 pb-3 px-3 rounded-md">
-      <NavLink3 url='/classroom' name="Classroom" />
-      <NavLink3 url='/profile' name="Profile"/>
-      <NavLink3 url='/settings' name="Account settings"/>
+      <NavLink3
+        url="/classroom"
+        name="Classroom"
+        onClick={() => {
+          if (lastViewedCourseSlug) {
+            router.push(`/course/${lastViewedCourseSlug}`);
+          }
+        }}
+      />
+      <NavLink3 url="/profile" name="Profile" />
+      <NavLink3 url="/settings" name="Account settings" />
     </div>
-  )
+  );
 }

@@ -195,7 +195,6 @@ export function AboutUs4() {
   );
 }
 export function AboutUs5() {
-  
   return (
     <div className="mb-2 bg-white w-full flex flex-col items-center px-6 md:px-16 lg:px-32 py-16 md:py-24 gap-16">
       <div className="flex flex-col w-full md:w-3/5 text-center justify-center items-center">
@@ -213,7 +212,11 @@ export function AboutUs5() {
         />
       </div>
       <div className="flex flex-col w-full justify-between md:flex-row flex-wrap gap-8">
-        {[...(categories[0]?.courses ?? []), ...(categories[1]?.courses ?? []), ...(categories[3]?.courses ?? [])].map((category, index) => (
+        {[
+          ...(categories[0]?.courses ?? []),
+          ...(categories[1]?.courses ?? []),
+          ...(categories[3]?.courses ?? []),
+        ].map((category, index) => (
           <CourseCategory key={index} {...category} />
         ))}
       </div>
