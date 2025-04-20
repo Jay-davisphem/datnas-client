@@ -35,7 +35,6 @@ const useTokens = () => {
   const [refreshToken, setRefreshToken] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<Error | null>(null);
-
   const fetchToken = useCallback(async () => {
     setLoading(true);
     setError(null);

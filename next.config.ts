@@ -5,9 +5,6 @@ const nextConfig: NextConfig = {
   images: {
     domains: ["upload.wikimedia.org"],
   },
-  videos: {
-    domains: ["youtube.com", "www.youtube.com", "i.ytimg.com"],
-  },
 };
 
 export default nextConfig;

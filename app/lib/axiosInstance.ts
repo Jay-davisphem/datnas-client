@@ -110,8 +110,8 @@ async function safeRequestWithTimeout(
       return { success: true, data: response.data };
     } catch (error: any) {
       clearTimeout(timeoutId);
-
-      if (error?.name === "AbortError") {
+      console.log(error?.request, 'my error request')
+      if (error?.code === "ERR_CANCELED" || error?.__CANCEL__) {
         console.log(`Request timed out (Attempt ${attempts + 1}). Retrying...`);
         attempts++;
         await new Promise((resolve) => setTimeout(resolve, 1000)); // Wait for 1 second before retrying
