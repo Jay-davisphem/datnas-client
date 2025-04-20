@@ -32,12 +32,15 @@ function CourseWithPagination({
 
   const handlePageChange = (newPage: number) => {
     setCurrentPage(newPage);
+    setTimeout(() => {
+      sectionRef.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }, 100);
   };
-
-  // Scroll to the grid when page changes
-  useEffect(() => {
-    sectionRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
-  }, [currentPage]);
+  
+  
 
   return (
     <div

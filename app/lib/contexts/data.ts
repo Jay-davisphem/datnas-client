@@ -317,7 +317,7 @@ const coursesCategories: IC[] = [
     ],
   },
   {
-    slug: "pharmacologyww",
+    slug: "pharmacology",
     name: "Pharmacology",
     imgUrl: "/bones-and-joints.svg",
     courses: [

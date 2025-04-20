@@ -93,7 +93,7 @@ authAxiosInstance.interceptors.response.use(
 async function safeRequestWithTimeout(
   axiosInstance: any,
   config: AxiosRequestConfig,
-  retries: number = 3,
+  retries: number = 1,
 ): Promise<{ success: boolean; data?: any; error?: string }> {
   let attempts = 0;
 

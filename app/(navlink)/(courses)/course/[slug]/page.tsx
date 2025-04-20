@@ -14,6 +14,10 @@ export default function CoursePage({ params }: { params: Params }) {
   const { getCourse } = useCourses();
   const [course, setCourse] = useState<ICourseCategory | undefined>();
 
+  if (slug?.toLowerCase() === 'published' || slug?.toLowerCase() === 'draft') {
+    return <div>Showing {slug} courses</div>;
+  }
+  
   useEffect(() => {
     const fetchCourse = async () => {
       const fetchedCourse = await getCourse(slug);
@@ -23,6 +27,7 @@ export default function CoursePage({ params }: { params: Params }) {
     };
     fetchCourse();
   }, [slug, getCourse]);
+  
 
   return (
     <div className="p-6 bg-gray-200 pt-8 pb-16 px-6 md:px-16 lg:px-32 flex flex-col gap-4 md:gap-5">
