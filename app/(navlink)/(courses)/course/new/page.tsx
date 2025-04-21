@@ -2,6 +2,7 @@
 import { useState, ChangeEvent, FormEvent } from 'react';
 import { CourseContent, Preview, VideoState, VideoUpload } from '@/app/ui/body/home/courses/uploads';
 import { RiVideoAddLine } from "react-icons/ri";
+import Tooltip from '@/app/ui/ToolTip';
 
 interface CreateCourseState {
   title: string;
@@ -136,7 +137,7 @@ const CreateCourse: React.FC = () => {
 
   return (
     <div className='bg-gray-200 w-full md:px-16 lg:px-32 md:py-16'>
-      <div className="bg-white mx-auto px-6 md:px-16 py-6 rounded-lg">
+      <div className="bg-white mx-auto px-6 md:px-16 py-6 rounded-lg drop-shadow-xl">
         <h1 className="text-2xl font-bold mb-6">Create New Course</h1>
         <form onSubmit={handleSubmit}>
           <CourseContent
@@ -181,19 +182,22 @@ const CreateCourse: React.FC = () => {
             ))}
           </div>
           <div className='flex gap-2 md:gap-4 justify-between'>
-            <button
-            type='button'
-              className="text-[#1C1C1CE5] rounded-sm text-base md:text-2xl py-2 px-3 md:py-4 md:px-6 w-2/5 border border-[#001A50] cursor-pointer hover:bg-gray-200 focu:bg-gray-200"
-            >
-              Save To Draft
-            </button>
-
-            <button
-            type='button'
-              className="rounded-md bg-[#001A50] text-white text-base md:text-2xl py-2 px-3 md:py-4 md:px-6 w-2/5 cursor-pointer hover:opacity-80 focus:opacity-80"
-            >
-              Publish
-            </button>
+            <Tooltip text="Students won't be able to see the course, but you can publish it in your draft page!" width='w-full'>
+                <button
+                type='button'
+                className="text-[#1C1C1CE5] rounded-sm text-base md:text-2xl py-2 px-3 md:py-4 md:px-6 w-full h-full border border-[#001A50] cursor-pointer hover:bg-gray-200 focu:bg-gray-200"
+                >
+                  Save To Draft
+                </button>
+            </Tooltip>
+            <Tooltip position='top' text='Do well to ensure that the information provided and file uploaded are accurate and corelate with one another, if you have any information wrongly uploaded, go back and re-edit now.' width='w-full'>
+              <button
+              type='button'
+                className="rounded-md bg-[#001A50] text-white text-base md:text-2xl py-2 px-3 md:py-4 md:px-6 w-full h-full cursor-pointer hover:opacity-80 focus:opacity-80"
+              >
+                Publish
+              </button>
+            </Tooltip>
           </div>
         </form>
       </div>
