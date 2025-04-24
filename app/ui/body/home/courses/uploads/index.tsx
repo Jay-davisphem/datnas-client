@@ -81,7 +81,7 @@ required
 required
             id={`video-title-${id}`}
             rows={3}
-            className="p-2 text-sm shadow-sm border  focus:outline-none focus:outline-0 focus:ring-0  block w-full sm:text-sm border-black rounded-md"
+            className="resize-none p-2 text-sm shadow-sm border  focus:outline-none focus:outline-0 focus:ring-0  block w-full sm:text-sm border-black rounded-md"
             placeholder="Write a description about the course"
             onChange={(e) => onTitleChange(id, e.target.value)}
           ></textarea>
@@ -94,7 +94,7 @@ required
 required
             id={`video-description-${id}`}
             rows={3}
-            className="p-2 text-sm shadow-sm border  focus:outline-none focus:outline-0 focus:ring-0  block w-full sm:text-sm border-black rounded-md"
+            className="resize-none p-2 text-sm shadow-sm border  focus:outline-none focus:outline-0 focus:ring-0  block w-full sm:text-sm border-black rounded-md"
             placeholder="Write a description about the course"
             onChange={(e) => onVideoDescChange(id, e.target.value)}
           ></textarea>
@@ -171,7 +171,7 @@ required
 required
         id="course-description"
         rows={3}
-        className="focus:outline-none focus:outline-0 focus:ring-0  shadow-sm border  block w-full p-2 text-sm border-black rounded-md"
+        className="resize-none focus:outline-none focus:outline-0 focus:ring-0  shadow-sm border  block w-full p-2 text-sm border-black rounded-md"
         placeholder="Write a description about the course"
         onChange={onDescriptionChange}
       ></textarea>

@@ -1,8 +1,12 @@
 'use client'
-import { useState, ChangeEvent, FormEvent } from 'react';
+import { useState, ChangeEvent, FormEvent, useEffect } from 'react';
 import { CourseContent, Preview, VideoState, VideoUpload } from '@/app/ui/body/home/courses/uploads';
 import { RiVideoAddLine } from "react-icons/ri";
 import Tooltip from '@/app/ui/ToolTip';
+import Link from 'next/link';
+import { useConfirmBeforeUnload } from '@/app/hooks/useBeforeUnload';
+import { useConfirm } from '@/app/hooks/useConfirm';
+import { useConfirmRouteChange } from '@/app/hooks/useConfirmRouteChange';
 
 interface CreateCourseState {
   title: string;
@@ -30,6 +34,28 @@ const CreateCourse: React.FC = () => {
   const [videoThumbnailPreviews, setVideoThumbnailPreviews] = useState<Record<number, string | null>>({});
   const [nextVideoId, setNextVideoId] = useState<number>(1);
   const [videoError, setVideoError] = useState<string | null>(null);
+  const [isDirty, setIsDirty] = useState<boolean>(false);
+  const confirm  = useConfirm();
+
+
+
+  useConfirmBeforeUnload(isDirty);
+  useConfirmRouteChange(isDirty);
+
+
+  const handlePublish = async () => {
+    const confirmed = await confirm('publish', '')
+    if (confirmed) {
+      // Handle the publish action here
+      console.log('Course published:', {
+        title,
+        description,
+        category,
+        thumbnail,
+        videos: videos.map((v) => ({ file: v.file, title: v.title, thumbnailFile: v.thumbnailFile })),
+      });
+    }
+  }
 
   const handleThumbnailChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = (e.target.files && e.target.files[0]) || null;
@@ -132,11 +158,20 @@ const CreateCourse: React.FC = () => {
       thumbnail,
       videos: videos.map((v) => ({ file: v.file, title: v.title, thumbnailFile: v.thumbnailFile })),
     });
+    setIsDirty(false);
     // In a real application, you would send this data to your backend
   };
 
+  useEffect(() => {
+    setIsDirty(true);
+  },  [title, description, category, thumbnail, videos]);
+  
   return (
     <div className='bg-gray-200 w-full md:px-16 lg:px-32 md:py-16'>
+      <div className="md:justify-end flex flex-col md:flex-row gap-4 mb-4 md:mb-8 px-6 md:px-0 py-8">
+          <Link href='/course/draft' className="bg-[#004ce8] text-white drop-shadow-md hover:opacity-80 rounded-md w-full justify-center flex-wrap md:w-1/5 p-4 text-base flex items-center">Draft</Link>
+          <Link href='/course/published' className="bg-[#004ce8] text-white drop-shadow-md hover:opacity-80 rounded-md w-full justify-center flex-wrap md:w-1/5 p-4 text-base flex items-center">Published</Link>
+        </div>
       <div className="bg-white mx-auto px-6 md:px-16 py-6 rounded-lg drop-shadow-xl">
         <h1 className="text-2xl font-bold mb-6">Create New Course</h1>
         <form onSubmit={handleSubmit}>
@@ -184,7 +219,7 @@ const CreateCourse: React.FC = () => {
           <div className='flex gap-2 md:gap-4 justify-between'>
             <Tooltip text="Students won't be able to see the course, but you can publish it in your draft page!" width='w-full'>
                 <button
-                type='button'
+                type='submit'
                 className="text-[#1C1C1CE5] rounded-sm text-base md:text-2xl py-2 px-3 md:py-4 md:px-6 w-full h-full border border-[#001A50] cursor-pointer hover:bg-gray-200 focu:bg-gray-200"
                 >
                   Save To Draft
@@ -193,6 +228,7 @@ const CreateCourse: React.FC = () => {
             <Tooltip position='top' text='Do well to ensure that the information provided and file uploaded are accurate and corelate with one another, if you have any information wrongly uploaded, go back and re-edit now.' width='w-full'>
               <button
               type='button'
+              onClick={handlePublish}
                 className="rounded-md bg-[#001A50] text-white text-base md:text-2xl py-2 px-3 md:py-4 md:px-6 w-full h-full cursor-pointer hover:opacity-80 focus:opacity-80"
               >
                 Publish

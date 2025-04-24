@@ -11,6 +11,9 @@ import useTokens from "@/app/hooks/useTokens";
 
 export function HomeSection1() {
   const { accessToken } = useTokens();
+  
+
+
   return (
     <div className="mt-4 p-6 md:p-16 lg:p-32 flex flex-col items-center  md:flex-row md:justify-between gap-18 md:gap-0">
       <div className="md:w-[45%] flex flex-col text-white text-center md:text-start gap-8 md:items-start mx-auto">
