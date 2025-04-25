@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import {
   Dialog,
   DialogPanel,
@@ -14,7 +14,7 @@ import {
   ReactNode,
 } from "react";
 
-type ModalType = 'info' | 'success' | 'error' | 'warning' | 'custom';
+type ModalType = "info" | "success" | "error" | "warning" | "custom";
 
 type ModalOptions = {
   title?: string;
@@ -35,7 +35,9 @@ const ModalContext = createContext<ModalContextType | null>(null);
 export const ModalProvider = ({ children }: { children: ReactNode }) => {
   const [visible, setVisible] = useState(false);
   const [options, setOptions] = useState<ModalOptions | null>(null);
-  const [resolvePromise, setResolvePromise] = useState<(result: boolean) => void>(() => {});
+  const [resolvePromise, setResolvePromise] = useState<
+    (result: boolean) => void
+  >(() => {});
 
   const showModal = (opts: ModalOptions): Promise<boolean> => {
     setOptions(opts);
@@ -58,11 +60,11 @@ export const ModalProvider = ({ children }: { children: ReactNode }) => {
   const getTypeButtonClass = (type?: ModalType) => {
     const base = "rounded-md px-4 py-2 text-sm text-white";
     switch (type) {
-      case 'success':
+      case "success":
         return `${base} bg-green-600 hover:bg-green-700`;
-      case 'error':
+      case "error":
         return `${base} bg-red-600 hover:bg-red-700`;
-      case 'warning':
+      case "warning":
         return `${base} bg-yellow-500 hover:bg-yellow-600`;
       default:
         return `${base} bg-blue-600 hover:bg-blue-700`; // info/default
@@ -98,7 +100,7 @@ export const ModalProvider = ({ children }: { children: ReactNode }) => {
             >
               <DialogPanel className="w-full max-w-sm transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
                 <DialogTitle className="text-lg font-medium text-gray-900">
-                  {options?.title ?? 'Notice'}
+                  {options?.title ?? "Notice"}
                 </DialogTitle>
                 <div className="mt-2 text-sm text-gray-700">
                   {options?.customContent ?? options?.message}
@@ -109,14 +111,14 @@ export const ModalProvider = ({ children }: { children: ReactNode }) => {
                       onClick={handleCancel}
                       className="rounded-md border border-gray-300 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                     >
-                      {options?.cancelText ?? 'Cancel'}
+                      {options?.cancelText ?? "Cancel"}
                     </button>
                   )}
                   <button
                     onClick={handleConfirm}
                     className={getTypeButtonClass(options?.type)}
                   >
-                    {options?.confirmText ?? 'Okay'}
+                    {options?.confirmText ?? "Okay"}
                   </button>
                 </div>
               </DialogPanel>

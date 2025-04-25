@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import {
   Dialog,
   DialogPanel,
@@ -19,12 +19,15 @@ type ConfirmationContextType = {
   requestConfirmation: (options: ConfirmationOptions) => Promise<boolean>;
 };
 
-export const ConfirmationContext = createContext<ConfirmationContextType | null>(null);
+export const ConfirmationContext =
+  createContext<ConfirmationContextType | null>(null);
 
 export const ConfirmationProvider = ({ children }: { children: ReactNode }) => {
   const [visible, setVisible] = useState(false);
   const [options, setOptions] = useState<ConfirmationOptions | null>(null);
-  const [resolvePromise, setResolvePromise] = useState<(result: boolean) => void>(() => {});
+  const [resolvePromise, setResolvePromise] = useState<
+    (result: boolean) => void
+  >(() => {});
 
   const requestConfirmation = (opts: ConfirmationOptions): Promise<boolean> => {
     setOptions(opts);
@@ -76,9 +79,7 @@ export const ConfirmationProvider = ({ children }: { children: ReactNode }) => {
                   {options?.title ?? "Are you sure?"}
                 </DialogTitle>
                 <div className="mt-2">
-                  <p className="text-sm text-gray-500">
-                    {options?.message}
-                  </p>
+                  <p className="text-sm text-gray-500">{options?.message}</p>
                 </div>
 
                 <div className="mt-4 flex justify-end gap-3">

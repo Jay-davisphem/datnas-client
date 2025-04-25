@@ -8,6 +8,7 @@ interface CourseContextType {
   loading: boolean;
   courses: IC[];
   lastViewedCourseSlug?: string;
+  personalizedCourses: IC[];
   getCourse: (slug: string) => Promise<ICourseCategory | undefined>;
 }
 
@@ -15,6 +16,7 @@ const CourseContext = createContext<CourseContextType | undefined>(undefined);
 
 export const CourseProvider = ({ children }: { children: React.ReactNode }) => {
   const [courses, setCourses] = useState<IC[]>([]);
+  const [personalizedCourses, setPersonalizedCourses] = useState<IC[]>([]);
   const [loading, setLoading] = useState(true);
   const [lastViewedCourseSlug, setLastViewedCourseSlug] = useState<
     string | undefined
@@ -25,8 +27,12 @@ export const CourseProvider = ({ children }: { children: React.ReactNode }) => {
       try {
         // will later fetch, use dummy now
         setCourses(coursesCategories);
+
+        // change later to fetch personalized courses
+        setPersonalizedCourses(coursesCategories);
       } catch (err) {
         setCourses([]);
+        setPersonalizedCourses([]);
       } finally {
         setLoading(false);
       }
@@ -60,6 +66,7 @@ export const CourseProvider = ({ children }: { children: React.ReactNode }) => {
     loading,
     courses,
     getCourse,
+    personalizedCourses,
     lastViewedCourseSlug,
   };
 

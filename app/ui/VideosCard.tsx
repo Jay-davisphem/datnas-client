@@ -39,8 +39,6 @@ function CourseWithPagination({
       });
     }, 100);
   };
-  
-  
 
   return (
     <div

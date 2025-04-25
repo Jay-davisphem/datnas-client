@@ -61,34 +61,37 @@ export default function VideosContainer({
   }, [searchParams]);
 
   return (
-    <div className="flex flex-col-reverse md:grid md:grid-cols-12 gap-5">
-      <VideoList
-        course={course}
-        onVideoSelect={handleVideoSelect}
-        playingVideoUrl={playingVideoUrl} // Pass the playing video URL
-      />
-      <div className="md:col-span-8 flex flex-col gap-3">
-        <div className="px-1 flex md:hidden flex-col gap-1 sticky bg-white z-10 pb-2">
-          <h2 className="text-2xl font-bold">Course Videos</h2>
-          <span className="flex gap-1 items-end justify-between text-sm md:text-base">
-            <span className="flex gap-2 items-center">
-              <span className="">{course?.category}</span>
-              <FaArrowRight className="" />
-              <span className="text-gray-400">{course?.courseTitle}</span>
-            </span>
-            <span className="focus:underline hover:underline text-[10px] cursor-pointer text-[#004CE8]">
-              course description
-            </span>
-          </span>
-        </div>
-        <VideoContainer
-          videoUrl={selectedVideoUrl}
-          videoTitle={selectedVideoTitle}
-          videoDescription={selectedVideoDescription}
-          customThumbnail={selectedVideoThumbnail}
+    <>
+      <div className="flex flex-col-reverse lg:grid lg:grid-cols-12 gap-5">
+        <VideoList
+          course={course}
+          onVideoSelect={handleVideoSelect}
+          playingVideoUrl={playingVideoUrl} // Pass the playing video URL
         />
-        <Discussion />
+        {/* want to delete or update */}
+        <div className="md:col-span-8 flex flex-col gap-3">
+          <div className="px-1 flex md:hidden flex-col gap-1 sticky bg-white z-10 pb-2">
+            <h2 className="text-2xl font-bold">Course Videos</h2>
+            <span className="flex gap-1 items-end justify-between text-sm md:text-base">
+              <span className="flex gap-2 items-center">
+                <span className="">{course?.category}</span>
+                <FaArrowRight className="" />
+                <span className="text-gray-400">{course?.courseTitle}</span>
+              </span>
+              <span className="focus:underline hover:underline text-[10px] cursor-pointer text-[#004CE8]">
+                course description
+              </span>
+            </span>
+          </div>
+          <VideoContainer
+            videoUrl={selectedVideoUrl}
+            videoTitle={selectedVideoTitle}
+            videoDescription={selectedVideoDescription}
+            customThumbnail={selectedVideoThumbnail}
+          />
+          <Discussion />
+        </div>
       </div>
-    </div>
+    </>
   );
 }

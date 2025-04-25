@@ -1,7 +1,7 @@
 import { CourseCategory } from "./CourseCategory";
 import coursesCategories from "@/app/lib/contexts/data";
 
-export default function CourseCategories({ gray = false }) {
+export default function CourseCategories({ gray = false, url = "/courses" }) {
   return (
     <div
       className={`flex flex-col items-start md:justify-between ${gray ? "gap-2 lg:gap-4" : "gap-6 lg:gap-8"}`}
@@ -20,6 +20,7 @@ export default function CourseCategories({ gray = false }) {
             name={name}
             slug={name}
             imgUrl={imgUrl}
+            url={url}
           />
         ))}
       </div>

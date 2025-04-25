@@ -1,57 +1,71 @@
-'use client';
+"use client";
 
-import React from 'react';
+import React from "react";
 
 interface TooltipProps {
   children: React.ReactNode;
   text: string;
   width?: string;
-  position?: 'top' | 'bottom' | 'left' | 'right' | 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right';
+  position?:
+    | "top"
+    | "bottom"
+    | "left"
+    | "right"
+    | "top-left"
+    | "top-right"
+    | "bottom-left"
+    | "bottom-right";
   offset?: string;
 }
 
-const Tooltip: React.FC<TooltipProps> = ({ children, text, width, position = 'bottom', offset = '0' }) => {
-  let positionClasses = '';
-  let transformClasses = '';
+const Tooltip: React.FC<TooltipProps> = ({
+  children,
+  text,
+  width,
+  position = "bottom",
+  offset = "0",
+}) => {
+  let positionClasses = "";
+  let transformClasses = "";
   let offsetStyle: React.CSSProperties = {};
 
   switch (position) {
-    case 'top':
-      positionClasses = 'bottom-full mb-2 left-1/2 -translate-x-1/2';
+    case "top":
+      positionClasses = "bottom-full mb-2 left-1/2 -translate-x-1/2";
       break;
-    case 'bottom':
-      positionClasses = 'top-full mt-2 left-1/2 -translate-x-1/2';
+    case "bottom":
+      positionClasses = "top-full mt-2 left-1/2 -translate-x-1/2";
       break;
-    case 'left':
-      positionClasses = 'right-full mr-2 top-1/2 -translate-y-1/2';
+    case "left":
+      positionClasses = "right-full mr-2 top-1/2 -translate-y-1/2";
       break;
-    case 'right':
-      positionClasses = 'left-full ml-2 top-1/2 -translate-y-1/2';
+    case "right":
+      positionClasses = "left-full ml-2 top-1/2 -translate-y-1/2";
       break;
-    case 'top-left':
-      positionClasses = 'bottom-full mb-2 right-0';
-      transformClasses = '';
+    case "top-left":
+      positionClasses = "bottom-full mb-2 right-0";
+      transformClasses = "";
       break;
-    case 'top-right':
-      positionClasses = 'bottom-full mb-2 left-0';
-      transformClasses = '';
+    case "top-right":
+      positionClasses = "bottom-full mb-2 left-0";
+      transformClasses = "";
       break;
-    case 'bottom-left':
-      positionClasses = 'top-full mt-2 right-0';
-      transformClasses = '';
+    case "bottom-left":
+      positionClasses = "top-full mt-2 right-0";
+      transformClasses = "";
       break;
-    case 'bottom-right':
-      positionClasses = 'top-full mt-2 left-0';
-      transformClasses = '';
+    case "bottom-right":
+      positionClasses = "top-full mt-2 left-0";
+      transformClasses = "";
       break;
     default:
-      positionClasses = 'bottom-full mb-2 left-1/2 -translate-x-1/2'; // Default to top
+      positionClasses = "bottom-full mb-2 left-1/2 -translate-x-1/2"; // Default to top
   }
 
   // Apply offset - simplified for top/bottom and left/right
-  if (position === 'top' || position === 'bottom') {
+  if (position === "top" || position === "bottom") {
     offsetStyle = { left: `calc(50% + ${offset})` };
-  } else if (position === 'left' || position === 'right') {
+  } else if (position === "left" || position === "right") {
     offsetStyle = { top: `calc(50% + ${offset})` };
   }
 

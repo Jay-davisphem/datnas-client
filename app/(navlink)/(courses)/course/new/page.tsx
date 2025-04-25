@@ -1,12 +1,18 @@
-'use client'
-import { useState, ChangeEvent, FormEvent, useEffect } from 'react';
-import { CourseContent, Preview, VideoState, VideoUpload } from '@/app/ui/body/home/courses/uploads';
+"use client";
+import { useState, ChangeEvent, FormEvent, useEffect } from "react";
+import { usePathname } from "next/navigation";
+import {
+  CourseContent,
+  Preview,
+  VideoState,
+  VideoUpload,
+} from "@/app/ui/body/home/courses/uploads";
 import { RiVideoAddLine } from "react-icons/ri";
-import Tooltip from '@/app/ui/ToolTip';
-import Link from 'next/link';
-import { useConfirmBeforeUnload } from '@/app/hooks/useBeforeUnload';
-import { useConfirm } from '@/app/hooks/useConfirm';
-import { useConfirmRouteChange } from '@/app/hooks/useConfirmRouteChange';
+import Tooltip from "@/app/ui/ToolTip";
+import Link from "next/link";
+import { useConfirmBeforeUnload } from "@/app/hooks/useBeforeUnload";
+import { useConfirm } from "@/app/hooks/useConfirm";
+import { useConfirmRouteChange } from "@/app/hooks/useConfirmRouteChange";
 
 interface CreateCourseState {
   title: string;
@@ -22,40 +28,56 @@ interface CreateCourseState {
 }
 
 const CreateCourse: React.FC = () => {
-  const [title, setTitle] = useState<string>('');
-  const [description, setDescription] = useState<string>('');
-  const [category, setCategory] = useState<string>('');
+  const [title, setTitle] = useState<string>("");
+  const [description, setDescription] = useState<string>("");
+  const [category, setCategory] = useState<string>("");
   const [thumbnail, setThumbnail] = useState<File | null>(null);
-  const [thumbnailPreviewUrl, setThumbnailPreviewUrl] = useState<string | null>(null);
+  const [thumbnailPreviewUrl, setThumbnailPreviewUrl] = useState<string | null>(
+    null,
+  );
   const [videos, setVideos] = useState<VideoState[]>([
-    { id: 0, file: null, title: '', desc: '', thumbnailUrl: null, thumbnailFile: null }, // Initialize with desc
+    {
+      id: 0,
+      file: null,
+      title: "",
+      desc: "",
+      thumbnailUrl: null,
+      thumbnailFile: null,
+    }, // Initialize with desc
   ]);
-  const [videoPreviews, setVideoPreviews] = useState<Record<number, string | null>>({});
-  const [videoThumbnailPreviews, setVideoThumbnailPreviews] = useState<Record<number, string | null>>({});
+  const [videoPreviews, setVideoPreviews] = useState<
+    Record<number, string | null>
+  >({});
+  const [videoThumbnailPreviews, setVideoThumbnailPreviews] = useState<
+    Record<number, string | null>
+  >({});
   const [nextVideoId, setNextVideoId] = useState<number>(1);
   const [videoError, setVideoError] = useState<string | null>(null);
   const [isDirty, setIsDirty] = useState<boolean>(false);
-  const confirm  = useConfirm();
-
-
+  const confirm = useConfirm();
+  const pathname = usePathname();
+  const isActive = (path: string) => pathname === path;
 
   useConfirmBeforeUnload(isDirty);
   useConfirmRouteChange(isDirty);
 
-
   const handlePublish = async () => {
-    const confirmed = await confirm('publish', '')
+    const confirmed = await confirm("publish", "");
     if (confirmed) {
       // Handle the publish action here
-      console.log('Course published:', {
+      console.log("Course published:", {
         title,
         description,
         category,
         thumbnail,
-        videos: videos.map((v) => ({ file: v.file, title: v.title, thumbnailFile: v.thumbnailFile })),
+        videos: videos.map((v) => ({
+          file: v.file,
+          title: v.title,
+          thumbnailFile: v.thumbnailFile,
+        })),
       });
     }
-  }
+  };
 
   const handleThumbnailChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = (e.target.files && e.target.files[0]) || null;
@@ -74,14 +96,17 @@ const CreateCourse: React.FC = () => {
 
   const handleVideoChange = (id: number, file: File | null) => {
     const updatedVideos = videos.map((video) =>
-      video.id === id ? { ...video, file } : video
+      video.id === id ? { ...video, file } : video,
     );
     setVideos(updatedVideos);
 
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setVideoPreviews((prev) => ({ ...prev, [id]: reader.result as string }));
+        setVideoPreviews((prev) => ({
+          ...prev,
+          [id]: reader.result as string,
+        }));
       };
       reader.readAsDataURL(file);
     } else {
@@ -91,28 +116,31 @@ const CreateCourse: React.FC = () => {
 
   const handleVideoTitleChange = (id: number, title: string) => {
     const updatedVideos = videos.map((video) =>
-      video.id === id ? { ...video, title } : video
+      video.id === id ? { ...video, title } : video,
     );
     setVideos(updatedVideos);
   };
 
   const handleVideoDescChange = (id: number, desc: string) => {
     const updatedVideos = videos.map((video) =>
-      video.id === id ? { ...video, desc } : video
+      video.id === id ? { ...video, desc } : video,
     );
     setVideos(updatedVideos);
   };
 
   const handleVideoThumbnailChange = (id: number, file: File | null) => {
     const updatedVideos = videos.map((video) =>
-      video.id === id ? { ...video, thumbnailFile: file } : video
+      video.id === id ? { ...video, thumbnailFile: file } : video,
     );
     setVideos(updatedVideos);
 
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setVideoThumbnailPreviews((prev) => ({ ...prev, [id]: reader.result as string }));
+        setVideoThumbnailPreviews((prev) => ({
+          ...prev,
+          [id]: reader.result as string,
+        }));
       };
       reader.readAsDataURL(file);
     } else {
@@ -124,7 +152,9 @@ const CreateCourse: React.FC = () => {
     if (videos.length > 0) {
       const lastVideo = videos[videos.length - 1];
       if (!lastVideo.file || !lastVideo.title.trim()) {
-        setVideoError('Please upload a video and provide a title before adding another.');
+        setVideoError(
+          "Please upload a video and provide a title before adding another.",
+        );
         return false;
       }
     }
@@ -134,7 +164,17 @@ const CreateCourse: React.FC = () => {
 
   const addAnotherVideo = () => {
     if (canAddAnotherVideo()) {
-      setVideos([...videos, { id: nextVideoId, file: null, title: '', desc: '', thumbnailUrl: null, thumbnailFile: null }]); // Initialize desc here too
+      setVideos([
+        ...videos,
+        {
+          id: nextVideoId,
+          file: null,
+          title: "",
+          desc: "",
+          thumbnailUrl: null,
+          thumbnailFile: null,
+        },
+      ]); // Initialize desc here too
       setNextVideoId(nextVideoId + 1);
     }
   };
@@ -156,7 +196,11 @@ const CreateCourse: React.FC = () => {
       description,
       category,
       thumbnail,
-      videos: videos.map((v) => ({ file: v.file, title: v.title, thumbnailFile: v.thumbnailFile })),
+      videos: videos.map((v) => ({
+        file: v.file,
+        title: v.title,
+        thumbnailFile: v.thumbnailFile,
+      })),
     });
     setIsDirty(false);
     // In a real application, you would send this data to your backend
@@ -164,14 +208,55 @@ const CreateCourse: React.FC = () => {
 
   useEffect(() => {
     setIsDirty(true);
-  },  [title, description, category, thumbnail, videos]);
-  
+  }, [title, description, category, thumbnail, videos]);
+
   return (
-    <div className='bg-gray-200 w-full md:px-16 lg:px-32 md:py-16'>
+    <div className="bg-gray-200 w-full md:px-16 lg:px-32 md:py-16">
       <div className="md:justify-end flex flex-col md:flex-row gap-4 mb-4 md:mb-8 px-6 md:px-0 py-8">
-          <Link href='/course/draft' className="bg-[#004ce8] text-white drop-shadow-md hover:opacity-80 rounded-md w-full justify-center flex-wrap md:w-1/5 p-4 text-base flex items-center">Draft</Link>
-          <Link href='/course/published' className="bg-[#004ce8] text-white drop-shadow-md hover:opacity-80 rounded-md w-full justify-center flex-wrap md:w-1/5 p-4 text-base flex items-center">Published</Link>
-        </div>
+        <Link
+          href="/course/new"
+          className={`rounded-md w-full justify-center flex-wrap md:w-1/5 p-4 text-base flex items-center
+            ${isActive("/course/new") ? "bg-gray-400 text-white cursor-not-allowed opacity-50" : "bg-[#004ce8] text-white hover:opacity-80 drop-shadow-md"}`}
+          aria-disabled={isActive("/course/new")}
+          onClick={(e) => {
+            if (isActive("/course/new")) {
+              e.preventDefault();
+            }
+          }}
+          tabIndex={isActive("/course/new") ? -1 : 0}
+        >
+          Create New Course
+        </Link>
+        <Link
+          href="/course/draft"
+          className={`rounded-md w-full justify-center flex-wrap md:w-1/5 p-4 text-base flex items-center
+            ${isActive("/course/draft") ? "bg-gray-400 text-white cursor-not-allowed opacity-50" : "bg-[#004ce8] text-white hover:opacity-80 drop-shadow-md"}`}
+          aria-disabled={isActive("/course/draft")}
+          onClick={(e) => {
+            if (isActive("/course/draft")) {
+              e.preventDefault();
+            }
+          }}
+          tabIndex={isActive("/course/draft") ? -1 : 0}
+        >
+          Draft
+        </Link>
+
+        <Link
+          href="/course/published"
+          className={`rounded-md w-full justify-center flex-wrap md:w-1/5 p-4 text-base flex items-center
+            ${isActive("/course/published") ? "bg-gray-400 text-white cursor-not-allowed opacity-50" : "bg-[#004ce8] text-white hover:opacity-80 drop-shadow-md"}`}
+          aria-disabled={isActive("/course/published")}
+          onClick={(e) => {
+            if (isActive("/course/published")) {
+              e.preventDefault();
+            }
+          }}
+          tabIndex={isActive("/course/published") ? -1 : 0}
+        >
+          Published
+        </Link>
+      </div>
       <div className="bg-white mx-auto px-6 md:px-16 py-6 rounded-lg drop-shadow-xl">
         <h1 className="text-2xl font-bold mb-6">Create New Course</h1>
         <form onSubmit={handleSubmit}>
@@ -195,40 +280,63 @@ const CreateCourse: React.FC = () => {
                 onDelete={videos.length > 1 ? removeVideo : undefined}
               />
             ))}
-            {videoError && <p className="text-red-500 text-sm mt-2">{videoError}</p>}
+            {videoError && (
+              <p className="text-red-500 text-sm mt-2">{videoError}</p>
+            )}
             <button
               type="button"
               onClick={addAnotherVideo}
               className="cursor-pointer mt-4 flex justify-center items-center gap-2 p-4 md:px-16  bg-transparent border border-gray-400 text-base md:text-lg text-gray-700 rounded-md hover:bg-gray-300"
             >
-              <RiVideoAddLine  className='text-[2em]'/>
+              <RiVideoAddLine className="text-[2em]" />
               Add another video
             </button>
           </div>
 
           <div className="mb-8">
-            {(thumbnailPreviewUrl || videos.length > 0) && <h2 className="text-xl font-semibold mb-4">Previews</h2>}
-            <Preview type="Thumbnail" url={thumbnailPreviewUrl} title='Course Thumbnail'/>
+            {(thumbnailPreviewUrl || videos.length > 0) && (
+              <h2 className="text-xl font-semibold mb-4">Previews</h2>
+            )}
+            <Preview
+              type="Thumbnail"
+              url={thumbnailPreviewUrl}
+              title="Course Thumbnail"
+            />
             {videos.map((video, id) => (
               <div key={video.id}>
-                <Preview type="Video" url={videoPreviews[video.id]} title={`#${id+1}. ${video.title || 'Video'}`}/>
-                <Preview type="Video Thumbnail" url={videoThumbnailPreviews[video.id]} title={`#${id+1}. ${video.thumbnailFile?.name || 'Video Thumbnail'}`}/>
+                <Preview
+                  type="Video"
+                  url={videoPreviews[video.id]}
+                  title={`#${id + 1}. ${video.title || "Video"}`}
+                />
+                <Preview
+                  type="Video Thumbnail"
+                  url={videoThumbnailPreviews[video.id]}
+                  title={`#${id + 1}. ${video.thumbnailFile?.name || "Video Thumbnail"}`}
+                />
               </div>
             ))}
           </div>
-          <div className='flex gap-2 md:gap-4 justify-between'>
-            <Tooltip text="Students won't be able to see the course, but you can publish it in your draft page!" width='w-full'>
-                <button
-                type='submit'
-                className="text-[#1C1C1CE5] rounded-sm text-base md:text-2xl py-2 px-3 md:py-4 md:px-6 w-full h-full border border-[#001A50] cursor-pointer hover:bg-gray-200 focu:bg-gray-200"
-                >
-                  Save To Draft
-                </button>
-            </Tooltip>
-            <Tooltip position='top' text='Do well to ensure that the information provided and file uploaded are accurate and corelate with one another, if you have any information wrongly uploaded, go back and re-edit now.' width='w-full'>
+          <div className="flex gap-2 md:gap-4 justify-between">
+            <Tooltip
+              text="Students won't be able to see the course, but you can publish it in your draft page!"
+              width="w-full"
+            >
               <button
-              type='button'
-              onClick={handlePublish}
+                type="submit"
+                className="text-[#1C1C1CE5] rounded-sm text-base md:text-2xl py-2 px-3 md:py-4 md:px-6 w-full h-full border border-[#001A50] cursor-pointer hover:bg-gray-200 focu:bg-gray-200"
+              >
+                Save To Draft
+              </button>
+            </Tooltip>
+            <Tooltip
+              position="top"
+              text="Do well to ensure that the information provided and file uploaded are accurate and corelate with one another, if you have any information wrongly uploaded, go back and re-edit now."
+              width="w-full"
+            >
+              <button
+                type="button"
+                onClick={handlePublish}
                 className="rounded-md bg-[#001A50] text-white text-base md:text-2xl py-2 px-3 md:py-4 md:px-6 w-full h-full cursor-pointer hover:opacity-80 focus:opacity-80"
               >
                 Publish

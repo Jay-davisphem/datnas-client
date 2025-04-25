@@ -1,4 +1,4 @@
-import { usePathname, useRouter } from "next/navigation"; 
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useConfirmationModal } from "./useConfirmationModal";
 import { NavigateOptions } from "next/dist/shared/lib/app-router-context.shared-runtime";
@@ -6,7 +6,7 @@ import { NavigateOptions } from "next/dist/shared/lib/app-router-context.shared-
 export const useConfirmRouteChange = (shouldBlock: boolean) => {
   const router = useRouter();
   const { requestConfirmation } = useConfirmationModal();
-  const pathname = usePathname()
+  const pathname = usePathname();
 
   useEffect(() => {
     if (!shouldBlock) return;
@@ -15,7 +15,8 @@ export const useConfirmRouteChange = (shouldBlock: boolean) => {
     const handleBeforeUnload = async (event: BeforeUnloadEvent) => {
       const confirmed = await requestConfirmation({
         title: "Leave this page?",
-        message: "You have unsaved changes. Do you really want to leave this page?",
+        message:
+          "You have unsaved changes. Do you really want to leave this page?",
         confirmText: "Leave",
         cancelText: "Stay",
       });
@@ -39,7 +40,8 @@ export const useConfirmRouteChange = (shouldBlock: boolean) => {
 
     const confirmed = await requestConfirmation({
       title: "Leave this page?",
-      message: "You have unsaved changes. Do you really want to leave this page?",
+      message:
+        "You have unsaved changes. Do you really want to leave this page?",
       confirmText: "Leave",
       cancelText: "Stay",
     });
@@ -60,5 +62,4 @@ export const useConfirmRouteChange = (shouldBlock: boolean) => {
       };
     }
   }, [shouldBlock, router]);
-
 };

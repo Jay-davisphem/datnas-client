@@ -8,12 +8,18 @@ export type ICourseCategory = {
   name: string;
   imgUrl: string;
   courses?: ICourse[];
+  url?: string;
 };
 
-export function CourseCategory({ slug, name, imgUrl }: ICourseCategory) {
+export function CourseCategory({
+  slug,
+  name,
+  imgUrl,
+  url = "/courses",
+}: ICourseCategory) {
   return (
     <Link
-      href={`/courses/#${slug}`}
+      href={`${url}/#${slug}`}
       className={`rounded-lg flex flex-row items-center lg:w-3/10 xl:w-4/20 md:w-4/20 ${openSans.className} bg-white h-20 hover:opaque-80 active:opaque-80`}
     >
       <Image

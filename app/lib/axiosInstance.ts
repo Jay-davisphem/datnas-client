@@ -110,7 +110,7 @@ async function safeRequestWithTimeout(
       return { success: true, data: response.data };
     } catch (error: any) {
       clearTimeout(timeoutId);
-      console.log(error?.request, 'my error request')
+      console.log(error?.request, "my error request");
       if (error?.code === "ERR_CANCELED" || error?.__CANCEL__) {
         console.log(`Request timed out (Attempt ${attempts + 1}). Retrying...`);
         attempts++;
